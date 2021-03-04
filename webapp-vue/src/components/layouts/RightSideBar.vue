@@ -50,7 +50,6 @@ export default {
 
 <style scoped>
 #sidebar {
-  height: 100%;
   width: fit-content;
   border-left: solid black 1px;
   display: flex;
@@ -79,7 +78,6 @@ export default {
   align-items: center;
   margin-bottom: 15px;
 }
-
 .sidebar-item :nth-child(1) {
   color: grey;
   font-size: 1.33em;

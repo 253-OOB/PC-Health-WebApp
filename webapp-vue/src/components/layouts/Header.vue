@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header class="header flex-aligned">
         <h1>PC Health</h1>
     </header>
 </template>
@@ -13,6 +13,6 @@ export default {
 <style scoped>
 .header{
     background-color: grey;
-    padding: 15px;
+    height: 5%;
 }
 </style>

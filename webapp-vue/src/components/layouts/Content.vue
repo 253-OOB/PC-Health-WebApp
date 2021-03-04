@@ -19,10 +19,12 @@ export default {
 <style scoped>
 #main-wrapper {
   display: flex;
-  height: 100%;
+  height: 95%;
 }
 
 #main {
   flex: 1;
+  margin: 50px 25px 50px 25px;
+  border: solid black 1px;
 }
 </style>
