@@ -1,13 +1,21 @@
 <template>
   <div id="sidebar">
-    <button class="sidebar-item" @click="btnClick(0)">
+    <router-link
+      to="/"
+      class="router sidebar-item"
+      v-on:click.native="btnClick(0)"
+    >
       <span> <font-awesome-icon icon="th" class="icons" /> </span>
       <p>Overview</p>
-    </button>
-    <button class="sidebar-item" @click="btnClick(1)">
+    </router-link>
+    <router-link
+      to="/about"
+      class="router sidebar-item"
+      v-on:click.native="btnClick(1)"
+    >
       <span> <font-awesome-icon icon="info-circle" class="icons" /> </span>
       <p>Metrics</p>
-    </button>
+    </router-link>
   </div>
 </template>
 
@@ -16,12 +24,12 @@ export default {
   name: "RightSideBar",
   data() {
     return {
-      lastBtnClicked: -1,
+      lastBtnClicked: 0,
     };
   },
   methods: {
     btnClick(btn_num) {
-      if (btn_num != this.lastBtnClicked && this.lastBtnClicked != -1) {
+      if (btn_num != this.lastBtnClicked) {
         var lastBtn = document.getElementsByClassName("sidebar-item")[
           this.lastBtnClicked
         ];
@@ -33,6 +41,9 @@ export default {
       btn.style["boxShadow"] = "inset 0px 0px 5px #c1c1c1";
       btn.style.webkitBoxShadow = "inset 0px 0px 5px #c1c1c1";
     },
+  },
+  mounted() {
+    this.btnClick(0);
   },
 };
 </script>
@@ -47,7 +58,8 @@ export default {
   padding: 20px;
 }
 
-button {
+.router {
+  text-decoration: none;
   padding: 10px;
   font: inherit;
   text-transform: uppercase;
@@ -58,15 +70,8 @@ button {
   cursor: pointer;
   outline: none;
 }
-button:hover {
+.router:hover {
   box-shadow: 0px 15px 20px grey;
-}
-button:active,
-button:focus {
-  /* -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
-  -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
-  box-shadow: inset 0px 0px 5px #c1c1c1; */
-  outline: none;
 }
 
 .sidebar-item {
@@ -74,6 +79,7 @@ button:focus {
   align-items: center;
   margin-bottom: 15px;
 }
+
 .sidebar-item :nth-child(1) {
   color: grey;
   font-size: 1.33em;

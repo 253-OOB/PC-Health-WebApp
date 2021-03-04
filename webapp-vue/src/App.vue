@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <Header />
-    <MainContent />
+    <Content />
   </div>
 </template>
 
 <script>
 import Header from './components/layouts/Header';
-import MainContent from './components/layouts/MainContent';
+import Content from './components/layouts/Content';
 
 export default {
   name: 'App',
   components: {
     Header,
-    MainContent,
+    Content,
   }
 }
 </script>
@@ -27,11 +27,10 @@ export default {
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  /* -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #FFFFFF;
-  background-color: #F7F7F7;
+  color: black;
   height: 100vh;
   width: 100vw;
   overflow: hidden;

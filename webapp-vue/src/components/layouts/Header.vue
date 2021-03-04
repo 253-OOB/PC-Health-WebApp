@@ -13,5 +13,6 @@ export default {
 <style scoped>
 .header{
     background-color: grey;
+    padding: 15px;
 }
 </style>
