@@ -13,7 +13,7 @@ Built with
 - HTML
 - JavaScript
 - CSS
-- Vue.js/Vue CLI
+- Vue.js/Vue CLI/Vue Router
 
 ## Features
 
