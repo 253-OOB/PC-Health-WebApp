@@ -13,7 +13,7 @@ Built with
 - HTML
 - JavaScript
 - CSS
-- Vue.js
+- Vue.js/Vue CLI
 
 ## Features
 
@@ -21,9 +21,9 @@ Coming Soon
 
 ## Tutorials
 
-#### For Development
+### For Development
 
-Set up:
+#### Set up
 
 - [Node.js 10.x](https://nodejs.org/en/) or above
 - npm 6.7 or above (comes with Node)
@@ -31,9 +31,34 @@ Set up:
 - If using VSCode I recommend the [Vetur extension](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
 - Install Project Dependencies `npm install`
 
-Deploy to GitHub Pages:
+#### Running the app through the cmd
 
-coming soon
+- `cd webapp-vue`
+- `npm run serve`
+
+#### Running the app with Vue UI
+
+- `vue ui`
+- Navigate to Tasks > serve > Run Task > Open app
+
+#### Build the app through the cmd
+
+- `cd webapp-vue`
+- `npm run build`
+
+#### Build the app with Vue UI
+
+- `vue ui`
+- Naviate to Tasks > build > Run Task
+- The build can be found in the "dist" folder
+
+#### Deploy to GitHub Pages
+
+[Tutorial](https://blog.logrocket.com/build-deploy-vue-js-app-github-pages/)
+
+### For Production
+
+Coming Soon
 
 ## Credits
 
