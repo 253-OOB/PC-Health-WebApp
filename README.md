@@ -19,9 +19,21 @@ Built with
 
 Coming Soon
 
-## How to use?
+## Tutorials
 
-Link coming soon
+#### For Development
+
+Set up:
+
+- [Node.js 10.x](https://nodejs.org/en/) or above
+- npm 6.7 or above (comes with Node)
+- Vue CLI `npm install -g @vue/cli`
+- If using VSCode I recommend the [Vetur extension](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
+- Install Project Dependencies `npm install`
+
+Deploy to GitHub Pages:
+
+coming soon
 
 ## Credits
 
