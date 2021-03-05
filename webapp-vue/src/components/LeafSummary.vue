@@ -1,7 +1,11 @@
 <template>
   <div id="leaf-wrapper">
-    <span id="title" v-for="title in metrics" v-bind:key="title">{{ title }}</span>
-    <div id="leaf-info">Tags ON</div>
+    <div id="title">
+      <span v-for="title in metrics" v-bind:key="title">{{ title }}</span>
+    </div>
+    <div id="leaf-info">
+      Tags ON
+    </div>
   </div>
 </template>
 
@@ -9,7 +13,7 @@
 export default {
   name: "LeafSummary",
   props: {
-      metrics: String
+    metrics: String,
   },
 };
 </script>
@@ -17,8 +21,8 @@ export default {
 <style scoped>
 #leaf-wrapper {
   border: solid black 1px;
-  width: fit-content;
-  height: fit-content;
+  width: 150px;
+  height: 70%;
   text-align: start;
   margin: 30px;
 }
@@ -26,10 +30,12 @@ export default {
 #title {
   font-size: 17px;
   font-weight: bold;
+  height: 30%;
 }
 
 #leaf-info {
   padding: 10px 7px 2px 15px;
   background-color: grey;
+  height: 70%;
 }
 </style>
