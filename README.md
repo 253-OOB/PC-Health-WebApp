@@ -31,10 +31,17 @@ Coming Soon
 - If using VSCode I recommend the [Vetur extension](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
 - Install Project Dependencies `npm install`
 
+#### Adding dependencies
+
+Use the --save tag when installing from npm.
+For example: `npm install --save vue-router`
+
 #### Running the app through the cmd
 
 - `cd webapp-vue`
 - `npm run serve`
+- `"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security  --user-data-dir=~/chromeTemp`
+- Input the address into the new chrome tab
 
 #### Running the app with Vue UI
 
