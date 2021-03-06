@@ -1,7 +1,7 @@
 <template>
   <div id="leaf-wrapper">
     <div id="title">
-      <span v-for="title in metrics" v-bind:key="title">{{ title }}</span>
+      <span v-for="(title, index) in metrics" v-bind:key="index">{{ title }}</span>
     </div>
     <div id="leaf-info">
       Tags ON
