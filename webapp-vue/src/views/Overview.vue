@@ -1,143 +1,24 @@
 <template>
   <div id="main">
     <component
-      v-for="(component, index) in componentLists"
+      v-for="(component, index) in JSONcomponentLists"
+      v-bind:metrics="component.LeafNames"
       :key="index"
-      :is="component.name"
-      v-bind:metrics="component.title"
+      :is="componentName"
     ></component>
   </div>
 </template>
 
 <script>
 import LeafSummary from "../components/LeafSummary";
+import FleafDataJ from "../components/json/formattedMLD.json";
 
 export default {
   name: "Overview",
   data() {
     return {
-      componentLists: [
-        {
-          name: "LeafSummary",
-          title: "Leaf 1",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 2",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 3",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 4",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 5",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 6",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 7",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 8",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 9",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 10",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 11",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 12",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 13",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 14",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 15",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 16",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 17",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 18",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 19",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 20",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 21",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 22",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 23",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 24",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 25",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 26",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 27",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 28",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 29",
-        },
-        {
-          name: "LeafSummary",
-          title: "Leaf 30",
-        },
-      ],
+      componentName: LeafSummary,
+      JSONcomponentLists: FleafDataJ,
     };
   },
   components: {
@@ -153,7 +34,8 @@ export default {
   grid-template-rows: repeat(auto-fill, 100px);
   justify-items: center;
   align-items: center;
-  overflow-y: scroll ;
+  overflow-y: scroll;
+  border: solid black 1px;
 }
 ::-webkit-scrollbar {
   width: 20px;
@@ -170,5 +52,4 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
   background-color: grey;
 }
-
 </style>

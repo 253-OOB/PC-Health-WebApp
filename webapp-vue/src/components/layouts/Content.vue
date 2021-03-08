@@ -1,6 +1,6 @@
 <template>
   <div id="main-wrapper">
-    <router-view id="main" :obj="leafData" v-if="leafData" />
+    <router-view id="main"/>
     <RightSideBar id="sidebar" />
   </div>
 </template>
@@ -12,18 +12,6 @@ export default {
   name: "Content",
   components: {
     RightSideBar,
-  },
-  props: ["data"],
-  data() {
-    return {
-      leafData: undefined,
-    };
-  },
-  // watch will check if the data prop is being updated
-  watch: {
-    data(newValue) {
-      this.leafData = newValue;
-    },
   },
 };
 </script>
@@ -37,6 +25,5 @@ export default {
 #main {
   flex: 1;
   margin: 50px 25px 50px 25px;
-  border: solid black 1px;
 }
 </style>
