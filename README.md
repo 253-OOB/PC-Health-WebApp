@@ -2,6 +2,8 @@
 
 CMPS 253 Project 09 - PC Health: The WebApp constitutes the front end of our project.
 
+[Link to WebApp](https://elmarwanos.github.io/PC-Health-WebApp/#/TheContainer/Overview)
+
 ## Screenshots
 
 Coming Soon
@@ -55,4 +57,6 @@ Built with
 
 #### Deploy to GitHub Pages
 
-[Tutorial](https://blog.logrocket.com/build-deploy-vue-js-app-github-pages/)
+```npm run deploy```
+
+[Tutorial](https://www.npmjs.com/package/vue-gh-pages)
