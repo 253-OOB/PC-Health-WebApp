@@ -1,14 +1,13 @@
 <template>
   <div id="app">
     <Header />
-    <Content :data="leafData" v-if="leafData" />
+    <Content />
   </div>
 </template>
 
 <script>
 import Header from "./components/layouts/Header";
 import Content from "./components/layouts/Content";
-import axios from 'axios';
 
 export default {
   name: "App",
@@ -16,31 +15,6 @@ export default {
     Header,
     Content,
   },
-  data() {
-    return {
-      url: process.env.VUE_APP_BASE_URL, 
-      leafData: null,
-      interval: undefined,
-    };
-  },
-  methods: {
-    async getLeafData() {
-      await axios.get(this.url)
-      // .then(response => this.leafData = response['data'])
-      .then(response => this.leafData = response['data'])
-      .catch(err => console.log(err));
-    }
-  },
-  created() {
-    this.getLeafData();
-    this.interval = setInterval(this.getLeafData, 2000);
-  },
-  beforeDestroy() {
-    if (this.interval) {
-      clearInterval(this.interval)
-      this.interval = undefined
-    }
-  }
 };
 </script>
 

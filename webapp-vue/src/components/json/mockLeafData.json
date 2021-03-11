@@ -1,0 +1,90 @@
+[
+    {
+        "timestamp": "1615127851",
+        "LeafNames": [
+            "DESKTOP-RCJ3SKF",
+            "Desktop-2",
+            "Desktop-3",
+            "Desktop-4"
+        ],
+        "RAM": [
+            [
+                {
+                    "AvailableMBytes": "6065"
+                }
+            ],
+            [
+                {
+                    "AvailableMBytes": "8200"
+                }
+            ],
+            [
+                {
+                    "AvailableMBytes": "4423"
+                }
+            ],
+            [
+                {
+                    "AvailableMBytes": "6050"
+                }
+            ]
+        ],
+        "Disk": [
+            [
+                {
+                    "Name": "C:",
+                    "Size": "53107597312",
+                    "FreeSpace": "6066872320"
+                },
+                {
+                    "Name": "D:",
+                    "Size": "60448768",
+                    "FreeSpace": "0"
+                }
+            ],
+            [
+                {
+                    "Name": "C:",
+                    "Size": "156489123",
+                    "FreeSpace": "1112112445"
+                }
+            ],
+            [
+                {
+                    "Name": "C:",
+                    "Size": "162489123",
+                    "FreeSpace": "48941273"
+                }
+            ],
+            [
+                {
+                    "Name": "C:",
+                    "Size": "4564894123",
+                    "FreeSpace": "1230856410"
+                }
+            ]
+        ],
+        "CurrentLoadPercentage": [
+            [
+                {
+                    "LoadPercentage": "4"
+                }
+            ],
+            [
+                {
+                    "LoadPercentage": "1"
+                }
+            ],
+            [
+                {
+                    "LoadPercentage": "2"
+                }
+            ],
+            [
+                {
+                    "LoadPercentage": "3"
+                }
+            ]
+        ]
+    }
+]
