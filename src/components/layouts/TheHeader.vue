@@ -6,13 +6,9 @@
 
 <script>
 export default {
-    name: "Header"
+    name: "TheHeader"
 }
 </script>
 
 <style scoped>
-.header{
-    background-color: grey;
-    height: 5%;
-}
 </style>

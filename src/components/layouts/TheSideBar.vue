@@ -1,7 +1,7 @@
 <template>
-  <div id="sidebar">
+  <div>
     <router-link
-      to="/"
+      to="/TheContainer/Overview"
       class="router sidebar-item"
       v-on:click.native="btnClick(0)"
     >
@@ -9,7 +9,7 @@
       <p>Overview</p>
     </router-link>
     <router-link
-      to="/about"
+      to="/TheContainer/Details"
       class="router sidebar-item"
       v-on:click.native="btnClick(1)"
     >
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "RightSideBar",
+  name: "TheSideBar",
   data() {
     return {
       lastBtnClicked: 0,
@@ -49,14 +49,6 @@ export default {
 </script>
 
 <style scoped>
-#sidebar {
-  width: fit-content;
-  border-left: solid black 1px;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
 .router {
   text-decoration: none;
   padding: 10px;
