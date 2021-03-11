@@ -19,7 +19,8 @@ Built with
 
 ## Features
 
-Coming Soon
+- Display leaf data
+- Sort/Filter leaf data
 
 ## Tutorials
 
@@ -36,22 +37,22 @@ Coming Soon
 
 `npm install`
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 
 ```npm run serve```
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 
 ```npm run build```
 
-### Lints and fixes files
+#### Lints and fixes files
 
 ```npm run lint```
 
-### Adding dependencies
+#### Adding dependencies
 
 ```npm install --save <library>```
 
-### Deploy to GitHub Pages
+#### Deploy to GitHub Pages
 
 [Tutorial](https://blog.logrocket.com/build-deploy-vue-js-app-github-pages/)
