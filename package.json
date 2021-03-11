@@ -6,7 +6,7 @@
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
-        "deploy": "node scripts/gh-pages-deploy.js"
+        "deploy": "node ./node_modules/vue-gh-pages/index.js"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.34",
@@ -29,7 +29,9 @@
         "eslint-plugin-vue": "^6.2.2",
         "execa": "latest",
         "rimraf": "^3.0.2",
-        "vue-template-compiler": "^2.6.11"
+        "vue-gh-pages": "^1.19.1",
+        "vue-template-compiler": "^2.6.11",
+        "homepage": "https://github.com/elmarwanos/PC-Health-WebApp"
     },
     "eslintConfig": {
         "root": true,
