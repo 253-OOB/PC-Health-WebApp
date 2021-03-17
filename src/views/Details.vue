@@ -8,14 +8,14 @@
         type="text"
       ></b-form-input>
       <b-input-group-append>
-        <b-button :disabled="!keyword" @click="keyword = ''">Clear</b-button>
+        <b-button id="clear-btn" :disabled="!keyword" @click="keyword = ''">Clear</b-button>
       </b-input-group-append>
     </b-input-group>
 
     <div id="table-container">
-      <!-- Bootstrap Table -->
       <b-table
         sticky-header="100%"
+        fixed
         striped
         hover
         :items="leafData"
@@ -37,26 +37,32 @@ export default {
       keyword: "",
       fields: [
         {
+          label: "Names",
           key: "LeafNames",
           sortable: true,
         },
         {
+          label: "RAM",
           key: "RAM",
           sortable: true,
         },
         {
+          label: "Drive",
           key: "Name1",
           sortable: true,
         },
         {
+          label: "Total Size",
           key: "Size1",
           sortable: true,
         },
         {
-          key: "Free",
+          label: "Free Space",
+          key: "FreeSpace1",
           sortable: true,
         },
         {
+          label: "Load%",
           key: "CurrentLoadPercentage",
           sortable: true,
         },
@@ -97,8 +103,12 @@ export default {
 }
 
 #table-container {
+  background-color: white;
   border: solid black 1px;
-  max-height: 90%;
-  overflow: scroll;
+  height: 95%;
+}
+
+#clear-btn{
+  background-color: #636f83;
 }
 </style>

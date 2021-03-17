@@ -5,7 +5,8 @@
         "Name1": "C:",
         "Size1": "53107597312",
         "FreeSpace1": "6066872320",
-        "CurrentLoadPercentage": "4"
+        "CurrentLoadPercentage": "4",
+        "isOnline": true
     },
     {
         "LeafNames": "DESKTOP-2",
@@ -13,7 +14,8 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "4"
+        "CurrentLoadPercentage": "4",
+        "isOnline": false
     },
     {
         "LeafNames": "DESKTOP-3",
@@ -21,7 +23,8 @@
         "Name1": "C:",
         "Size1": "425424523",
         "FreeSpace1": "354378324",
-        "CurrentLoadPercentage": "2"
+        "CurrentLoadPercentage": "2",
+        "isOnline": true
     },
     {
         "LeafNames": "DESKTOP-4",
@@ -29,7 +32,8 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "1"
+        "CurrentLoadPercentage": "1",
+        "isOnline": false
     },
     {
         "LeafNames": "DESKTOP-5",
@@ -37,7 +41,8 @@
         "Name1": "C:",
         "Size1": "53107597312",
         "FreeSpace1": "6066872320",
-        "CurrentLoadPercentage": "4"
+        "CurrentLoadPercentage": "4",
+        "isOnline": true
     },
     {
         "LeafNames": "DESKTOP-6",
@@ -45,7 +50,8 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "4"
+        "CurrentLoadPercentage": "4",
+        "isOnline": false
     },
     {
         "LeafNames": "DESKTOP-7",
@@ -53,7 +59,8 @@
         "Name1": "C:",
         "Size1": "425424523",
         "FreeSpace1": "354378324",
-        "CurrentLoadPercentage": "2"
+        "CurrentLoadPercentage": "2",
+        "isOnline": true
     },
     {
         "LeafNames": "DESKTOP-8",
@@ -61,7 +68,8 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "1"
+        "CurrentLoadPercentage": "1",
+        "isOnline": false
     },
     {
         "LeafNames": "DESKTOP-9",
@@ -69,7 +77,8 @@
         "Name1": "C:",
         "Size1": "53107597312",
         "FreeSpace1": "6066872320",
-        "CurrentLoadPercentage": "4"
+        "CurrentLoadPercentage": "4",
+        "isOnline": true
     },
     {
         "LeafNames": "DESKTOP-10",
@@ -77,7 +86,8 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "4"
+        "CurrentLoadPercentage": "4",
+        "isOnline": false
     },
     {
         "LeafNames": "DESKTOP-11",
@@ -85,7 +95,8 @@
         "Name1": "C:",
         "Size1": "425424523",
         "FreeSpace1": "354378324",
-        "CurrentLoadPercentage": "2"
+        "CurrentLoadPercentage": "2",
+        "isOnline": false
     },
     {
         "LeafNames": "DESKTOP-12",
@@ -93,7 +104,8 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "1"
+        "CurrentLoadPercentage": "1",
+        "isOnline": false
     },
     {
         "LeafNames": "DESKTOP-13",
@@ -101,7 +113,8 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "1"
+        "CurrentLoadPercentage": "1",
+        "isOnline": false
     },
     {
         "LeafNames": "DESKTOP-14",
@@ -109,7 +122,8 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "1"
+        "CurrentLoadPercentage": "1",
+        "isOnline": false
     },
     {
         "LeafNames": "DESKTOP-15",
@@ -117,7 +131,8 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "1"
+        "CurrentLoadPercentage": "1",
+        "isOnline": true
     },
     {
         "LeafNames": "DESKTOP-16",
@@ -125,6 +140,7 @@
         "Name1": "C:",
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
-        "CurrentLoadPercentage": "1"
+        "CurrentLoadPercentage": "1",
+        "isOnline": false
     }
 ]
