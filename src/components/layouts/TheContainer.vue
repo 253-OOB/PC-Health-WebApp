@@ -1,9 +1,9 @@
 <template>
   <div id="TheContainer">
-    <TheHeader id="TheHeader" />
+    <TheHeader />
     <div id="main-content">
       <router-view id="main" />
-      <TheSideBar id="TheSideBar" />
+      <TheSideBar />
     </div>
   </div>
 </template>
@@ -22,10 +22,13 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Barlow', sans-serif;
 }
 
 /*This class can be used on any element to center it*/
@@ -42,29 +45,19 @@ export default {
   text-align: center;
   height: 100vh;
   width: 100vw;
-  color: black;
-}
-
-#TheHeader {
-  height: 5%;
-  background-color: grey;
+  color: #3c4b64;
 }
 
 #main-content {
   display: flex;
-  height: 95%;
+  height: 90%;
 }
 
 #main {
   margin: 50px 25px 50px 25px;
+  border: 1px solid #ced2d8;
   flex: 1;
+  background-color:#636f83;
 }
 
-#TheSideBar {
-  display: flex;
-  padding: 20px;
-  width: fit-content;
-  border-left: solid black 1px;
-  flex-direction: column;
-}
 </style>
