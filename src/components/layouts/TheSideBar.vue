@@ -1,20 +1,21 @@
 <template>
-  <div>
+  <div id="TheSidebar">
     <router-link
       to="/TheContainer/Overview"
-      class="router sidebar-item"
+      class="sidebar-item flex-aligned"
       v-on:click.native="btnClick(0)"
     >
-      <span> <font-awesome-icon icon="th" class="icons" /> </span>
-      <p>Overview</p>
+      <font-awesome-icon icon="th" class="icons" />
+      <p class="text">Overview</p>
     </router-link>
+
     <router-link
       to="/TheContainer/Details"
-      class="router sidebar-item"
+      class="sidebar-item  flex-aligned"
       v-on:click.native="btnClick(1)"
     >
-      <span> <font-awesome-icon icon="info-circle" class="icons" /> </span>
-      <p>Metrics</p>
+      <font-awesome-icon icon="info-circle" class="icons" />
+      <p class="text">Metrics</p>
     </router-link>
   </div>
 </template>
@@ -38,8 +39,8 @@ export default {
       }
       this.lastBtnClicked = btn_num;
       var btn = document.getElementsByClassName("sidebar-item")[btn_num];
-      btn.style["boxShadow"] = "inset 0px 0px 5px #c1c1c1";
-      btn.style.webkitBoxShadow = "inset 0px 0px 5px #c1c1c1";
+      btn.style["boxShadow"] = "inset 0px 0px 10px black";
+      btn.style.webkitBoxShadow = "inset 0px 0px 10px black";
     },
   },
   mounted() {
@@ -49,33 +50,47 @@ export default {
 </script>
 
 <style scoped>
-.router {
-  text-decoration: none;
+
+#TheSidebar {
+  background: #636f83;
+  display: flex;
   padding: 10px;
-  font: inherit;
-  text-transform: uppercase;
-  border: none;
-  border-radius: 30px;
-  box-shadow: 0px 8px 15px grey;
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
-}
-.router:hover {
-  box-shadow: 0px 15px 20px grey;
+  width: fit-content;
+  flex-direction: column;
 }
 
 .sidebar-item {
-  display: flex;
-  align-items: center;
+  padding: 10px;
   margin-bottom: 15px;
+  border: none;
+  border-radius: 30px;
+  justify-content: space-around;
+  background-color: white;
+  outline: none;
+  font: inherit;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s ease 0s;
+  color: #636f83;
 }
-.sidebar-item :nth-child(1) {
+.sidebar-item:hover {
+  cursor: pointer;
+}
+
+.icons {
+  margin-right: 5px;
+}
+
+.text {
+  margin: 0px;
+}
+
+/* .sidebar-item :nth-child(1) {
   color: grey;
   font-size: 1.33em;
 }
 .sidebar-item :nth-child(2) {
   color: grey;
   margin-left: 20px;
-}
+} */
 </style>
