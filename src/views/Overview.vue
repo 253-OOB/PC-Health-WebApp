@@ -2,7 +2,8 @@
   <div id="main">
     <component
       v-for="(component, index) in JSONcomponentLists"
-      v-bind:metrics="component.LeafNames"
+      v-bind:index="index"
+      v-bind:metrics="component"
       :key="index"
       :is="componentName"
     ></component>
@@ -30,12 +31,11 @@ export default {
 <style scoped>
 #main {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 200px));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-template-rows: repeat(auto-fill, 100px);
   justify-items: center;
   align-items: center;
   overflow-y: scroll;
-  border: solid black 1px;
 }
 ::-webkit-scrollbar {
   width: 20px;
