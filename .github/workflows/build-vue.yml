@@ -29,11 +29,18 @@ jobs:
     - run: npm -g install @vue/cli
     - run: npm run build --if-present
     
-    - name: Azure Storage Action
-      uses: lauchacarro/Azure-Storage-Action@v1.1
+    - name: azure-blob-copy-action
+  # You may pin to the exact commit or the version.
+  # uses: ulaval/azure-blob-copy-action@a5589c66042be9a15da7cc2a28e63adc3a42af3a
+      uses: ulaval/azure-blob-copy-action@v1
       with:
-        connection-string: ${{secrets.AZURESTORAGECONNECTIONSTRING}}
-        folder: "./docs"
-        blob-container-name: "pchealth/app"
-
-    
+          # Either upload or download
+         action: upload
+         # Azure Blob Storage connection string
+         connection_string: ${{AZURESTORAGECONNECTIONSTRING}}
+         # Azure Blob Storage container name
+         container_name: pchealth
+         # Directory in Azure to copy from or to
+         blob_directory: app
+         # Local directory to copy from or to; this can either be an absolute path or a relative path
+         local_directory: docs
