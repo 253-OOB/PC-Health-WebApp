@@ -80,7 +80,7 @@ $RECYCLE.BIN/
 
 .DS_Store
 node_modules
-/dist
+# /dist     MIGHT CAUSE PROBLEMS LATER ON
 
 # local env files
 .env.local
