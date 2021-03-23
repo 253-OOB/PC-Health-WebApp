@@ -18,6 +18,8 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    
+    # Build    
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -26,3 +28,11 @@ jobs:
     - run: npm install
     - run: npm -g install @vue/cli
     - run: npm run build --if-present
+    
+    uses: lauchacarro/Azure-Storage-Action@v1.1
+      with:
+        connection-string: {AZURESTORAGECONNECTIONSTRING}
+        folder: "./docs"
+        blob-container-name: "pchealth/app"
+
+    
