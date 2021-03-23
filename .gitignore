@@ -103,7 +103,7 @@ pnpm-debug.log*
 
 # Vuejs
 node_modules/
-dist/
+# dist/ MIGHT CAUSE PROBLEMS LATER
 npm-debug.log
 yarn-error.log
 
