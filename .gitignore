@@ -82,7 +82,7 @@ $RECYCLE.BIN/
 
 .DS_Store
 node_modules
-# /dist     MIGHT CAUSE PROBLEMS LATER ON
+/dist
 
 # local env files
 .env.local
@@ -105,7 +105,7 @@ pnpm-debug.log*
 
 # Vuejs
 node_modules/
-# dist/ MIGHT CAUSE PROBLEMS LATER
+dist/
 npm-debug.log
 yarn-error.log
 
