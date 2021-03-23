@@ -29,7 +29,8 @@ jobs:
     - run: npm -g install @vue/cli
     - run: npm run build --if-present
     
-    uses: lauchacarro/Azure-Storage-Action@v1.1
+    - name: Azure Storage Action
+      uses: lauchacarro/Azure-Storage-Action@v1.1
       with:
         connection-string: {AZURESTORAGECONNECTIONSTRING}
         folder: "./docs"
