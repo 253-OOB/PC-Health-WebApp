@@ -28,21 +28,21 @@ export default new VueRouter({
                     component: Details
                 }
             ]
-        },
-        {
-            path: '/pages',
-            redirect: '/pages/404',
-            name: 'Pages',
-            component: {
-                render(c) {
-                    return c('router-view')
-                }
-            },
-            children: [{
-                path: '404',
-                name: 'Page404',
-                component: Page404
-            }, ],
         }
+//         {
+//             path: '/pages',
+//             redirect: '/pages/404',
+//             name: 'Pages',
+//             component: {
+//                 render(c) {
+//                     return c('router-view')
+//                 }
+//             },
+//             children: [{
+//                 path: '404',
+//                 name: 'Page404',
+//                 component: Page404
+//             }, ],
+//         }
     ]
 })
