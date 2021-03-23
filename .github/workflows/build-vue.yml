@@ -41,7 +41,7 @@ jobs:
          # Directory in Azure to copy from or to
          blob_directory: app
          # Local directory to copy from or to; this can either be an absolute path or a relative path
-         local_directory: docs
+         local_directory: dist
          
     - name: Upload Pages
       uses: ulaval/azure-blob-copy-action@v1
