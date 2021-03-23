@@ -37,7 +37,7 @@ jobs:
           # Either upload or download
          action: upload
          # Azure Blob Storage connection string
-         connection_string: ${{AZURESTORAGECONNECTIONSTRING}}
+         connection_string: ${{secrets.AZURESTORAGECONNECTIONSTRING}}
          # Azure Blob Storage container name
          container_name: pchealth
          # Directory in Azure to copy from or to
