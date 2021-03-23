@@ -30,8 +30,7 @@
         "execa": "latest",
         "rimraf": "^3.0.2",
         "vue-gh-pages": "^1.19.1",
-        "vue-template-compiler": "^2.6.11",
-        "homepage": "https://github.com/elmarwanos/PC-Health-WebApp"
+        "vue-template-compiler": "^2.6.11"
     },
     "eslintConfig": {
         "root": true,
