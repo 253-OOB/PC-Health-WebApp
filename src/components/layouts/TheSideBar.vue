@@ -17,6 +17,14 @@
       <font-awesome-icon icon="info-circle" class="icons" />
       <p class="text">Metrics</p>
     </router-link>
+
+    <router-link
+      to="/TheContainer/Graphs"
+      class="sidebar-item flex-aligned"
+      v-on:click.native="btnClick(2)"
+    >
+      <p class="text">Graphs</p>
+    </router-link>
   </div>
 </template>
 

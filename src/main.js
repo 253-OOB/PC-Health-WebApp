@@ -2,17 +2,22 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";  // Router
 
-import { library } from "@fortawesome/fontawesome-svg-core";  // FontAwesomeIcon
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"; // FontAwesomeIcon
-import { faInfoCircle, faTh } from "@fortawesome/free-solid-svg-icons"; // FontAwesomeIcon
-library.add(faInfoCircle, faTh);  // FontAwesomeIcon
-Vue.component("font-awesome-icon", FontAwesomeIcon);  // FontAwesomeIcon
+// FontAwesomeIcon
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faInfoCircle, faTh } from "@fortawesome/free-solid-svg-icons";
+library.add(faInfoCircle, faTh);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
-import { BootstrapVue } from "bootstrap-vue"; // BootstrapVue
-import "bootstrap/dist/css/bootstrap.css";  // BootstrapVue
-import "bootstrap-vue/dist/bootstrap-vue.css";  // BootstrapVue
-Vue.use(BootstrapVue);  // BootstrapVue
+// BootstrapVue
+import { BootstrapVue } from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+Vue.use(BootstrapVue); 
 
+// CoreuiChartjsVue
+import CoreuiVueCharts from '@coreui/vue-chartjs'
+Vue.use(CoreuiVueCharts)
 
 Vue.config.productionTip = false;
 
