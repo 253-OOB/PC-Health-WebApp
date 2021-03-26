@@ -1,7 +1,7 @@
 <template>
-  <div class="graphs flex-aligned">
+  <div class="graph-container flex-aligned">
     <CChartBar
-      id="bar-chart"
+      class="chart"
       :datasets="[
         {
           data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -13,7 +13,7 @@
       :options="{ maintainAspectRatio: true }"
     />
     <CChartLine
-      id="line-chart"
+      class="chart"
       :datasets="[
         {
           label: 'Data One',
@@ -37,19 +37,17 @@ export default {};
 </script>
 
 <style scoped>
-
-.graphs{
-    justify-content: space-around;
+.graph-container {
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-#bar-chart {
+.chart {
   background-color: white;
-  width: 40%;
-  height: fit-content;
-}
-#line-chart {
-  background-color: white;
-  width: 40%;
-  height: fit-content;
+  min-width: 300px;
+  max-width: 700px;
+  width: 60%;
+  border-radius: 5px;
+  box-shadow: 3px 5px 15px black;
 }
 </style>
