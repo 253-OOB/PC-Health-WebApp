@@ -44,10 +44,12 @@ export default {};
 
 #bar-chart {
   background-color: white;
+  width: 40%;
   height: fit-content;
 }
 #line-chart {
   background-color: white;
+  width: 40%;
   height: fit-content;
 }
 </style>
