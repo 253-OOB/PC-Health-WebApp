@@ -1,6 +1,6 @@
 <template>
   <div class="graph-container flex-aligned">
-    <CChartBar
+    <!-- <CChartBar
       class="chart"
       :datasets="[
         {
@@ -11,29 +11,46 @@
       ]"
       :labels="months"
       :options="{ maintainAspectRatio: true }"
-    />
+    /> -->
     <CChartLine
       class="chart"
       :datasets="[
         {
-          label: 'Data One',
+          label: 'Memory Used [GB]',
           backgroundColor: 'rgb(228,102,81,0.9)',
-          data: [30, 39, 10, 50, 30, 70, 35],
+          data: memUsed,
         },
-        {
+      ]"
+      :options="{ maintainAspectRatio: true }"
+    />
+    <!-- {
           label: 'Data Two',
           backgroundColor: 'rgb(0,216,255,0.9)',
           data: [39, 80, 40, 35, 40, 20, 45],
-        },
-      ]"
-      :labels="months"
-      :options="{ maintainAspectRatio: true }"
-    />
+        }, -->
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      memUsed: [],
+    };
+  },
+  methods: {
+    setMemUsed() {
+      this.memUsed = this.$graphData.map(
+        (dataPoint) =>
+          JSON.parse(dataPoint["memory"]["data"])[0].TotalMemory -
+          JSON.parse(dataPoint["memory"]["data"])[0].AvailableMBytes
+      );
+    },
+  },
+  mounted() {
+    this.setMemUsed();
+  },
+};
 </script>
 
 <style scoped>
