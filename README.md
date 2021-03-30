@@ -2,7 +2,8 @@
 
 CMPS 253 Project 09 - PC Health: The WebApp constitutes the front end of our project.
 
-[Link to WebApp](https://253-oob.github.io/PC-Health-WebApp/#/TheContainer/Overview)
+[Link to WebApp - GitHub Pages](https://253-oob.github.io/PC-Health-WebApp/#/TheContainer/Overview)
+[Link to WebApp - Azure](https://pchealth-webapp.azurewebsites.net/api/home/index.html)
 
 ## Screenshots
 
