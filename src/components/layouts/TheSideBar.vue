@@ -1,5 +1,6 @@
 <template>
   <div id="TheSidebar">
+    <!-- Overview -->
     <router-link
       to="/TheContainer/Overview"
       class="sidebar-item flex-aligned"
@@ -9,13 +10,24 @@
       <p class="text">Overview</p>
     </router-link>
 
+    <!-- METRICS -->
     <router-link
       to="/TheContainer/Details"
-      class="sidebar-item  flex-aligned"
+      class="sidebar-item flex-aligned"
       v-on:click.native="btnClick(1)"
     >
       <font-awesome-icon icon="info-circle" class="icons" />
       <p class="text">Metrics</p>
+    </router-link>
+
+    <!-- GRAPHS -->
+    <router-link
+      to="/TheContainer/Graphs"
+      class="sidebar-item flex-aligned"
+      v-on:click.native="btnClick(2)"
+    >
+      <font-awesome-icon icon="chart-line" class="icons" />
+      <p class="text">Graphs</p>
     </router-link>
   </div>
 </template>
@@ -50,7 +62,6 @@ export default {
 </script>
 
 <style scoped>
-
 #TheSidebar {
   background: #636f83;
   display: flex;
