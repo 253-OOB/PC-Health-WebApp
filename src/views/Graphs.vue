@@ -1,33 +1,38 @@
 <template>
   <div class="graph-container flex-aligned">
-    <!-- <CChartBar
+    <CChartBar
       class="chart"
       :datasets="[
         {
-          data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-          backgroundColor: '#E55353',
-          label: 'Sales',
+          label: 'CPU Used',
+          backgroundColor: 'rgb(0,0,255,0.9)',
+          data: cpuUsed,
         },
       ]"
-      :labels="months"
       :options="{ maintainAspectRatio: true }"
-    /> -->
-    <CChartLine
+    />
+    <CChartBar
       class="chart"
       :datasets="[
         {
           label: 'Memory Used [GB]',
-          backgroundColor: 'rgb(228,102,81,0.9)',
+          backgroundColor: 'rgb(255,0,0,0.9)',
           data: memUsed,
         },
       ]"
       :options="{ maintainAspectRatio: true }"
     />
-    <!-- {
-          label: 'Data Two',
-          backgroundColor: 'rgb(0,216,255,0.9)',
-          data: [39, 80, 40, 35, 40, 20, 45],
-        }, -->
+    <CChartBar
+      class="chart"
+      :datasets="[
+        {
+          label: 'Disk Used [GB]',
+          backgroundColor: 'rgb(0,255,0,0.9)',
+          data: diskUsed,
+        },
+      ]"
+      :options="{ maintainAspectRatio: true }"
+    />
   </div>
 </template>
 
@@ -35,28 +40,54 @@
 export default {
   data() {
     return {
+      cpuUsed: [],
       memUsed: [],
+      diskUsed: [],
     };
   },
   methods: {
+    setCpuUsed() {
+      var processList = [];
+      for (let dataPoint of this.$graphData["cpu"]) {
+        let summ = 0;
+        for (let core of JSON.parse(dataPoint["processors"]["data"])[0][
+          "Cores"
+        ]) {
+          summ += core["PercentProcessorTime"];
+        }
+        processList.push(summ);
+      }
+      this.cpuUsed = processList;
+    },
+
     setMemUsed() {
-      this.memUsed = this.$graphData.map(
+      this.memUsed = this.$graphData["memory"].map(
         (dataPoint) =>
           JSON.parse(dataPoint["memory"]["data"])[0].TotalMemory -
           JSON.parse(dataPoint["memory"]["data"])[0].AvailableMBytes
       );
     },
+
+    setDiskUsed() {
+      this.diskUsed = this.$graphData["disk"].map(
+        (dataPoint) =>
+          JSON.parse(dataPoint["logical_disks"]["data"])[0].Size -
+          JSON.parse(dataPoint["logical_disks"]["data"])[0].FreeSpace
+      );
+    },
   },
   mounted() {
+    this.setCpuUsed();
     this.setMemUsed();
+    this.setDiskUsed();
   },
 };
 </script>
 
 <style scoped>
 .graph-container {
-  flex-direction: column;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .chart {
