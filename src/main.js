@@ -32,7 +32,7 @@ Vue.use(CoreuiVueCharts);
 ////////////////////////////////////
 ///////////// GLOBALS //////////////
 ////////////////////////////////////
-let graphData = null;
+let graphData = new Object(); //dictionary for the graph data
 
 ////////////////////////////////////
 ///////////// METHODS //////////////
@@ -48,9 +48,25 @@ async function getReq(url) {
 
 async function launchVueApp() {
   // Put calls that need to be dont before anything HERE
+
+  // CPU Call
+  await getReq(process.env.VUE_APP_API_GET_CPU_RE).then((response) => {
+    graphData["cpu"] = response;
+    console.log("Fetched cpu data from API");
+    Vue.prototype.$graphData = graphData;
+  });
+
+  // Memory Call
   await getReq(process.env.VUE_APP_API_GET_MEMORY_RE).then((response) => {
-    graphData = response;
+    graphData["memory"] = response;
     console.log("Fetched memory data from API");
+    Vue.prototype.$graphData = graphData;
+  });
+
+  // Disk Call
+  await getReq(process.env.VUE_APP_API_GET_LOGIC_DISK_RE).then((response) => {
+    graphData["disk"] = response;
+    console.log("Fetched disk data from API");
     Vue.prototype.$graphData = graphData;
   });
 
@@ -60,6 +76,5 @@ async function launchVueApp() {
     render: (h) => h(App),
   }).$mount("#app");
 }
-
 
 launchVueApp();
