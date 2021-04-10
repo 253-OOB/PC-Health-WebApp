@@ -8,48 +8,46 @@ const Overview = () => import('../views/Overview.vue')
 const Details = () => import('../views/Details.vue')
 const Graphs = () => import("../views/Graphs.vue");
 
+const Login = () => import('../views/pages/Login.vue');
 
 Vue.use(VueRouter)
 
 export default new VueRouter({
-  routes: [
-    {
-      path: "/",
-      redirect: "/TheContainer/Overview",
-      name: "TheContainer",
-      component: TheContainer,
-      children: [
+    routes: [
         {
-          path: "TheContainer/Overview",
-          name: "Overview",
-          component: Overview,
+            path: "/",
+            redirect: "/overview",
+            name: "TheContainer",
+            component: TheContainer,
+            meta: {
+                requiresAuth: true
+            },
+            children: [
+                {
+                    path: "overview",
+                    name: "Overview",
+                    component: Overview,
+                },
+                {
+                    path: "details",
+                    name: "Details",
+                    component: Details,
+                },
+                {
+                    path: "graphs",
+                    name: "Graphs",
+                    component: Graphs,
+                }
+            ]
         },
         {
-          path: "TheContainer/Details",
-          name: "Details",
-          component: Details,
-        },
-        {
-          path: "TheContainer/Graphs",
-          name: "Graphs",
-          component: Graphs,
-        },
-      ],
-    },
-    //         {
-    //             path: '/pages',
-    //             redirect: '/pages/404',
-    //             name: 'Pages',
-    //             component: {
-    //                 render(c) {
-    //                     return c('router-view')
-    //                 }
-    //             },
-    //             children: [{
-    //                 path: '404',
-    //                 name: 'Page404',
-    //                 component: Page404
-    //             }, ],
-    //         }
-  ],
+            path: '/login',
+            name: 'Login',
+            component: Login,
+            meta: {
+                
+            }
+        }
+    ],
 });
+

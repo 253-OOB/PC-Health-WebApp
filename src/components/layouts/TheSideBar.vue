@@ -2,7 +2,7 @@
   <div id="TheSidebar">
     <!-- Overview -->
     <router-link
-      to="/TheContainer/Overview"
+      to="/overview"
       class="sidebar-item flex-aligned"
       v-on:click.native="btnClick(0)"
     >
@@ -12,7 +12,7 @@
 
     <!-- METRICS -->
     <router-link
-      to="/TheContainer/Details"
+      to="/details"
       class="sidebar-item flex-aligned"
       v-on:click.native="btnClick(1)"
     >
@@ -22,7 +22,7 @@
 
     <!-- GRAPHS -->
     <router-link
-      to="/TheContainer/Graphs"
+      to="/graphs"
       class="sidebar-item flex-aligned"
       v-on:click.native="btnClick(2)"
     >
