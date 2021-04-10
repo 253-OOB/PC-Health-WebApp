@@ -56,8 +56,8 @@
                     this.$session.LoggedIn = true;
                     document.cookie = `AccessToken=${json.accessToken}`;
 
-                    if( "redirect" in this.$route.redirect ) {
-                        this.$router.push(this.$route.redirect);
+                    if( "redirect" in this.$route.query ) {
+                        this.$router.push(this.$route.query.redirect);
                     } else {
                         this.$router.push("/");
                     }
