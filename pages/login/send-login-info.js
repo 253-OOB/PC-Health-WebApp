@@ -1,8 +1,26 @@
+
+
 function sendData() {
+
   const username = document.getElementById("user_input").value;
   const password = document.getElementById("pswd_input").value;
 
-  httpGetAsync("insertUrlHere");
+  var params = "?";
+
+  if( verifyUsernameOrEmail(username) == "email" ) {
+
+    params = params + "Email=" + username; 
+
+  } else {
+
+    var credentials = username.split(".");
+    params = params + "Organisation=" + credentials[0] + "&Username=" + credentials[1];
+
+  }
+
+  url = "inserUrlHere" + params;
+
+  httpGetAsync(url);
 
   var http = new XMLHttpRequest();
   var url = "insertUrlHere";
@@ -16,6 +34,28 @@ function sendData() {
       alert(http.responseText);
     }
   };
+
+  
+
+  
+
   var params = "{ username:'" + username + "', password:'" + password + "' }";
   http.send(params);
+}
+
+/**
+ * Function to verify if the user has entered an email or a username.
+ */
+function verifyUsernameOrEmail(credentials) {
+
+  if ( credentials.includes("@") ) {
+
+    return "email";
+
+  } else {
+
+    return "username";
+
+  }
+
 }
