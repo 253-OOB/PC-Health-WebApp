@@ -8,7 +8,7 @@ const Overview = () => import('../views/Overview.vue')
 const Details = () => import('../views/Details.vue')
 const Graphs = () => import("../views/Graphs.vue");
 
-const Login = () => import('../views/pages/Login.vue');
+const Login = () => import('../pages/Login.vue');
 
 Vue.use(VueRouter)
 
