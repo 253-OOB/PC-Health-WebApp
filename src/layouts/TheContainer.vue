@@ -3,33 +3,34 @@
     <TheHeader />
     <div id="main-content">
       <router-view id="main" />
-      <TheSideBar />
     </div>
   </div>
 </template>
 
 <script>
 import TheHeader from "./TheHeader";
-import TheSideBar from "./TheSideBar";
 
 export default {
   name: "TheContainer",
   components: {
     TheHeader,
-    TheSideBar,
   },
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: 'Barlow', sans-serif;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-family: "Barlow", sans-serif;
+  --background-color: #636f83;
+  --spacer-color: #ced2d8;
 }
 
 /*This class can be used on any element to center it*/
@@ -56,9 +57,8 @@ export default {
 
 #main {
   margin: 50px 25px 50px 25px;
-  border: 1px solid #ced2d8;
+  border: 1px solid var(--spacer-color);
   flex: 1;
-  background-color:#636f83;
+  background-color: var(--background-color);
 }
-
 </style>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const TheContainer = () => import('../components/layouts/TheContainer.vue')
+const TheContainer = () => import('../layouts/TheContainer.vue')
 // const Page404 = () => import('../views/pages/Page404.vue')
 
 const Overview = () => import('../views/Overview.vue')
