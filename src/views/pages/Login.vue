@@ -2,9 +2,9 @@
   <div class="wrapper">
     <h1 class="title">PC Health</h1>
 
-    <div class="login-form">
+    <div class="login-main">
       <h2 class="login-heading">Login</h2>
-
+      <!-- Username -->
       <form action="#" @submit.prevent="login">
         <div class="form-control">
           <label for="email">Username/Email</label>
@@ -16,7 +16,7 @@
             v-model="username"
           />
         </div>
-
+        <!-- Password -->
         <div class="form-control mb-more">
           <label for="password">Password</label>
           <input
@@ -27,16 +27,21 @@
             v-model="password"
           />
         </div>
-
-        <div class="form-control">
-          <button type="submit" class="btn-submit-login" v-on:click="hideMsg()">
-            Login
-          </button>
-        </div>
       </form>
+      <!-- Submit Button -->
+      <button type="submit" v-on:click="hideMsg(), login()">
+        Login
+      </button>
+      <!-- lOADING ICON -->
+      <div id="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <!-- ERROR MSG -->
+      <h2 id="err-msg">Invalid Login</h2>
     </div>
-
-    <h2 id="err-msg">Invalid Login</h2>
   </div>
 </template>
 
@@ -88,11 +93,17 @@ export default {
     },
 
     hideMsg() {
+      //hide err
       document.getElementById("err-msg").style.display = "none";
+      //show load
+      document.getElementById("lds-ring").style.display = "block";
     },
 
     showMsg() {
+      //show err
       document.getElementById("err-msg").style.display = "block";
+      //hide load
+      document.getElementById("lds-ring").style.display = "none";
     },
   },
 };
@@ -124,13 +135,19 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-form {
-  width: 500px;
+.login-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-heading {
   text-align: center;
   margin-bottom: 30px;
+}
+
+form {
+  width: 500px;
 }
 
 .form-control {
@@ -146,25 +163,52 @@ form {
   border: 2px solid #8f9092;
 }
 
-.form-control:last-child {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-}
-
-.form-control:last-child > button {
-  margin-top: 30px;
+button {
+  margin: 30px;
   padding: 5px 100px;
   border-radius: 10px;
 }
 
+/* error message */
 #err-msg {
   display: none;
-  position: absolute;
-  left: 50%;
-  top: 80%;
-  transform: translate(-50%, -50%);
   color: rgb(160, 1, 1);
+}
+
+/* Loading icon */
+#lds-ring {
+  display: none;
+  width: 80px;
+  height: 80px;
+}
+
+#lds-ring > div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid black;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: black transparent transparent transparent;
+}
+#lds-ring > div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+#lds-ring > div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+#lds-ring > div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
