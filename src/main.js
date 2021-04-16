@@ -11,9 +11,9 @@ import router from "./router"; // Router
 // FontAwesomeIcon
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faInfoCircle, faTh, faChartLine } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faTh, faChartLine, faBell, faCog } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faInfoCircle, faTh, faChartLine);
+library.add(faInfoCircle, faTh, faChartLine, faBell, faCog);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 // BootstrapVue

@@ -7,6 +7,8 @@ const TheContainer = () => import('../layouts/TheContainer.vue')
 const Overview = () => import('../views/Overview.vue')
 const Details = () => import('../views/Details.vue')
 const Graphs = () => import("../views/Graphs.vue");
+const Notifications = () => import("../views/Notifications.vue");
+const Settings = () => import("../views/Settings.vue");
 
 const Login = () => import('../pages/Login.vue');
 
@@ -37,6 +39,16 @@ export default new VueRouter({
                     path: "graphs",
                     name: "Graphs",
                     component: Graphs,
+                },
+                {
+                    path: "notifications",
+                    name: "Notifications",
+                    component: Notifications,
+                },
+                {
+                    path: "settings",
+                    name: "Settings",
+                    component: Settings,
                 }
             ]
         },
