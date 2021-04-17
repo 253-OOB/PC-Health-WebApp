@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="overview">
     <component
       v-for="(component, index) in JSONcomponentLists"
       v-bind:index="index"
@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import LeafSummary from "../components/LeafSummary";
-import FleafDataJ from "../components/json/formattedMLD.json";
+import LeafSummary from "@/components/LeafSummary";
+import FleafDataJ from "@/components/json/formattedMLD.json";
 
 export default {
   name: "Overview",
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped>
-#main {
+#overview {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-template-rows: repeat(auto-fill, 100px);

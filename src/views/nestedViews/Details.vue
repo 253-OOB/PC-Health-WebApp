@@ -1,38 +1,35 @@
 <template>
   <div id="details">
-    <!-- Searchbar -->
-    <b-input-group size="lg">
-      <b-form-input
-        v-model="keyword"
-        placeholder="Type to Search..."
-        type="text"
-      ></b-form-input>
-      <b-input-group-append>
-        <b-button id="clear-btn" :disabled="!keyword" @click="keyword = ''">Clear</b-button>
-      </b-input-group-append>
-    </b-input-group>
-
-    <div id="table-container">
       <b-table
-        sticky-header="100%"
         fixed
         striped
         hover
         :items="leafData"
         :fields="fields"
         :filter="keyword"
+        :per-page="perPage"
+        :current-page="currentPage"
       >
       </b-table>
+
+      <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="my-table"
+      ></b-pagination>
     </div>
-  </div>
 </template>
 
 <script>
-import FleafDataJ from "../components/json/formattedMLD.json";
+import FleafDataJ from "@/components/json/formattedMLD.json";
 
 export default {
   data() {
     return {
+      // used for pagination
+      perPage: 12,
+      currentPage: 1,
       // url: process.env.VUE_APP_POSTMAN_BASE_URL,
       keyword: "",
       fields: [
@@ -70,6 +67,11 @@ export default {
       leafData: FleafDataJ,
     };
   },
+  computed: {
+    rows() {
+      return this.leafData.length
+    }
+  }
 };
 // watch: {
 //   obj(newValue) {
@@ -100,15 +102,12 @@ export default {
 <style scoped>
 #details {
   color: black;
-}
-
-#table-container {
   background-color: white;
   border: solid black 1px;
   height: 95%;
 }
 
-#clear-btn{
+#clear-btn {
   background-color: #636f83;
 }
 </style>
