@@ -2,21 +2,12 @@
   <header class="header flex-aligned">
     <h1 id="title">PC Health</h1>
     <div id="TheNavbar">
-      <!-- Overview -->
-      <router-link
-        to="/overview"
-        class="navbar-item flex-aligned"
-        v-on:click.native="navSwitch(0)"
-      >
-        <font-awesome-icon icon="th" class="icons" />
-        <p class="text">Overview</p>
-      </router-link>
 
       <!-- METRICS -->
       <router-link
-        to="/details"
+        to="/metrics"
         class="navbar-item flex-aligned"
-        v-on:click.native="navSwitch(1)"
+        v-on:click.native="navSwitch(0)"
       >
         <font-awesome-icon icon="info-circle" class="icons" />
         <p class="text">Metrics</p>
@@ -26,7 +17,7 @@
       <router-link
         to="/graphs"
         class="navbar-item flex-aligned"
-        v-on:click.native="navSwitch(2)"
+        v-on:click.native="navSwitch(1)"
       >
         <font-awesome-icon icon="chart-line" class="icons" />
         <p class="text">Graphs</p>
@@ -36,7 +27,7 @@
       <router-link
         to="/notifications"
         class="navbar-item flex-aligned"
-        v-on:click.native="navSwitch(3)"
+        v-on:click.native="navSwitch(2)"
       >
         <font-awesome-icon icon="bell" class="icons" />
         <p class="text">Notifications</p>
@@ -46,7 +37,7 @@
       <router-link
         to="/settings"
         class="navbar-item flex-aligned"
-        v-on:click.native="navSwitch(4)"
+        v-on:click.native="navSwitch(3)"
       >
         <font-awesome-icon icon="cog" class="icons" />
         <p class="text">Settings</p>
