@@ -1,38 +1,43 @@
 <template>
-  <div class="graph-container flex-aligned">
-    <CChartBar
-      class="chart"
-      :datasets="[
-        {
-          label: 'CPU Used',
-          backgroundColor: 'rgb(0,0,255,0.9)',
-          data: cpuUsed,
-        },
-      ]"
-      :options="{ maintainAspectRatio: true }"
-    />
-    <CChartBar
-      class="chart"
-      :datasets="[
-        {
-          label: 'Memory Used [GB]',
-          backgroundColor: 'rgb(255,0,0,0.9)',
-          data: memUsed,
-        },
-      ]"
-      :options="{ maintainAspectRatio: true }"
-    />
-    <CChartBar
-      class="chart"
-      :datasets="[
-        {
-          label: 'Disk Used [GB]',
-          backgroundColor: 'rgb(0,255,0,0.9)',
-          data: diskUsed,
-        },
-      ]"
-      :options="{ maintainAspectRatio: true }"
-    />
+  <div class="graphs">
+    <div class="chart-container">
+      <CChartBar
+        :datasets="[
+          {
+            label: 'CPU Used',
+            backgroundColor: 'rgb(0,0,255,0.9)',
+            data: cpuUsed,
+          },
+        ]"
+        :options="{ responsive: true }"
+      />
+    </div>
+
+    <div class="chart-container">
+      <CChartBar
+        :datasets="[
+          {
+            label: 'Memory Used [GB]',
+            backgroundColor: 'rgb(255,0,0,0.9)',
+            data: memUsed,
+          },
+        ]"
+        :options="{ responsive: true }"
+      />
+    </div>
+
+    <div class="chart-container">
+      <CChartBar
+        :datasets="[
+          {
+            label: 'Disk Used [GB]',
+            backgroundColor: 'rgb(0,255,0,0.9)',
+            data: diskUsed,
+          },
+        ]"
+        :options="{ responsive: true }"
+      />
+    </div>
   </div>
 </template>
 
@@ -85,16 +90,18 @@ export default {
 </script>
 
 <style scoped>
-.graph-container {
+.graphs {
+  display: flex;
+  align-content: center;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
-.chart {
+.chart-container {
+  width: 50%;
+  max-width: 450px;
+  margin: 10px;
   background-color: white;
-  min-width: 300px;
-  max-width: 700px;
-  width: 60%;
   border-radius: 5px;
   box-shadow: 3px 5px 15px black;
 }

@@ -13,6 +13,7 @@
       </b-table>
 
       <b-pagination
+      class="flex-aligned"
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
