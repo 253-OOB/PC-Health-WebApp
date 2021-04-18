@@ -141,11 +141,11 @@ async function callRequests() {
     }
 
 
-    // getCPU();
-    // getMemory();
-    // getDisk();
-    // getTags();
-    // getOrgs();
+    getCPU();
+    getMemory();
+    getDisk();
+    getTags();
+    getOrgs();
 }
 
 async function launchVueApp() {
