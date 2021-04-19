@@ -24,6 +24,7 @@ export default new VueRouter({
     {
       path: "/",
       name: "TheContainer",
+      redirect: "/metrics/overview",
       component: TheContainer,
       meta: {
         requiresAuth: true,
