@@ -138,25 +138,37 @@ export default {
         // },
 
         getOrgs() {
+
             const AccToken = this.getCookie("AccessToken");
             const RefToken = this.$session.RefreshToken;
 
+            console.log(AccToken);
+            console.log(RefToken);
+
             if (AccToken.length === 0)
                 console.error("Missing Cookie Access Token");
+
             else if (RefToken === null) console.error("Missing Refresh Token");
+
             else {
+                
                 fetch(process.env.VUE_APP_API_GET_ORGS, {
                     method: "POST",
-                    body: {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
                         AccessToken: AccToken,
                         RefreshToken: RefToken,
-                    },
+                    }),
                 })
                     .then((response) => {
+
                         return response.json();
                     })
                     .then((orgsData) => {
-                        console.log(orgsData.json());
+                        console.log(orgsData);
                         console.log("Fetched ORGANIZATIONS");
                     })
                     .catch((err) => {
