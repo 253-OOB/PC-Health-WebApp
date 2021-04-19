@@ -1,6 +1,5 @@
 <template>
     <div class="settings">
-        Coming Soon
         <button v-on:click="installApp()">Install App</button>
     </div>
 </template>

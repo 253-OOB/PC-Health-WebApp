@@ -104,6 +104,72 @@ export default {
             ],
         };
     },
+
+    methods: {
+        getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(";");
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == " ") {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        },
+
+        // getTags() {
+        //     fetch(process.env.VUE_APP_API_GET_TAGS, {
+        //         method: "GET",
+        //         body: JSON.stringify(/*insert data here*/),
+        //     })
+        //         .then((response) => response.json())
+        //         .then((tagData) => {
+        //             console.log("Fetched TAGS");
+        //             console.log(tagData);
+        //         })
+        //         .catch((err) => {
+        //             console.error("Error fetching TAGS:\n" + err);
+        //         });
+        // },
+
+        getOrgs() {
+            const AccToken = this.getCookie("AccessToken");
+            const RefToken = this.$session.RefreshToken;
+
+            if (AccToken.length === 0)
+                console.error("Missing Cookie Access Token");
+            else if (RefToken === null) console.error("Missing Refresh Token");
+            else {
+                fetch(process.env.VUE_APP_API_GET_ORGS, {
+                    method: "POST",
+                    body: {
+                        AccessToken: AccToken,
+                        RefreshToken: RefToken,
+                    },
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((orgsData) => {
+                        console.log(orgsData.json());
+                        console.log("Fetched ORGANIZATIONS");
+                    })
+                    .catch((err) => {
+                        console.error("Error fetching ORGANIZATIONS:\n" + err);
+                    });
+            }
+        },
+    },
+
+    mounted() {
+        // this.getTags();
+        this.getOrgs();
+    },
 };
 </script>
 

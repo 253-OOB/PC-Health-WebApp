@@ -35,10 +35,6 @@ Vue.use(CoreuiVueCharts);
 ////////////////////////////////////
 ///////////// GLOBALS //////////////
 ////////////////////////////////////
-// let graphData = new Object(); //dictionary for the graph data
-let tags = new Object();
-let organizations = new Object();
-
 let session = {
     LoggedIn: false,
     RefreshToken: undefined,
@@ -48,13 +44,6 @@ let session = {
 ///////////// METHODS //////////////
 ////////////////////////////////////
 Vue.config.productionTip = false;
-
-// method to make http get requests
-async function getReq(url) {
-    let response = await fetch(url);
-    let data = await response.json();
-    return data;
-}
 
 // Configure Route Permissions
 router.beforeEach((to, from, next) => {
@@ -72,43 +61,8 @@ router.beforeEach((to, from, next) => {
     }
 });
 
-async function callRequests() {
-    // Put calls that need to be done before anything HERE
-    async function getTags() {
-        // Tags Call
-        await getReq(process.env.VUE_APP_API_GET_TAGS)
-            .then((response) => {
-                tags = response;
-                console.log("Fetched TAGS from API");
-                Vue.prototype.$tags = tags;
-            })
-            .catch((err) => {
-                console.error("Error fetching TAGS from API:\n" + err);
-            });
-    }
-
-    async function getOrgs() {
-        // Orgs Call
-        await getReq(process.env.VUE_APP_API_GET_ORGS)
-            .then((response) => {
-                organizations = response;
-                console.log("Fetched ORGANIZATIONS from API");
-                Vue.prototype.$organizations = organizations;
-            })
-            .catch((err) => {
-                console.error("Error fetching ORGANIZATIONS from API:\n" + err);
-            });
-    }
-
-    getTags();
-    getOrgs();
-}
-
 async function launchVueApp() {
     Vue.prototype.$session = session;
-
-    //Makes all api requests
-    callRequests();
 
     // Loads in vue app
     new Vue({
