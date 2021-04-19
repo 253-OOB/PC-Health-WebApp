@@ -26,13 +26,17 @@
 import FleafDataJ from "@/components/json/formattedMLD.json";
 
 export default {
+    name: "Details",
+
+    props: {
+        keyword: String,
+    },
+
     data() {
         return {
             // used for pagination
-            perPage: 12,
+            perPage: 8,
             currentPage: 1,
-            // url: process.env.VUE_APP_POSTMAN_BASE_URL,
-            keyword: "",
             fields: [
                 {
                     label: "Names",
@@ -68,17 +72,13 @@ export default {
             leafData: FleafDataJ,
         };
     },
+
     computed: {
         rows() {
             return this.leafData.length;
         },
     },
 };
-// watch: {
-//   obj(newValue) {
-//     this.leafData = newValue;
-//   },
-// },
 // methods: {
 //   async getLeafData() {
 //     await this.$http

@@ -1,6 +1,6 @@
 <template>
     <div class="metrics">
-        <div class="tools">
+        <b-input-group size="lg">
             <!-- Dropdown Select 1 -->
             <b-form-select
                 class="dropdowns"
@@ -14,7 +14,6 @@
                     >
                 </template>
             </b-form-select>
-
             <!-- Dropdown Select 2 -->
             <b-form-select
                 class="dropdowns"
@@ -28,19 +27,23 @@
                     >
                 </template>
             </b-form-select>
-
             <!-- Searchbar -->
             <b-form-input
                 v-model="keyword"
                 placeholder="Type to Search..."
                 type="text"
             ></b-form-input>
-
             <!-- Clear Button -->
-            <b-button id="clear-btn" :disabled="!keyword" @click="keyword = ''">
-                Clear
-            </b-button>
-        </div>
+            <b-input-group-append>
+                <b-button
+                    id="clear-btn"
+                    :disabled="!keyword"
+                    @click="keyword = ''"
+                >
+                    Clear
+                </b-button>
+            </b-input-group-append>
+        </b-input-group>
 
         <!-- Tabs -->
         <div class="tab-group">
@@ -66,10 +69,12 @@
         <!-- Tab Content -->
         <div class="content-group">
             <div v-if="activetab === 1" class="tabcontent">
+                <!-- overview -->
                 <router-view class="sub-content" />
             </div>
             <div v-if="activetab === 2" class="tabcontent">
-                <router-view class="sub-content" />
+                <!-- details -->
+                <router-view :keyword="this.keyword" class="sub-content" />
             </div>
         </div>
     </div>
@@ -77,8 +82,12 @@
 
 <script>
 export default {
+    name: "Metrics",
+
     data() {
         return {
+            keyword: "",
+
             // Used for tabs
             activetab: 1,
 
