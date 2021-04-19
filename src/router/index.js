@@ -20,56 +20,56 @@ const Login = () => import("@/pages/Login.vue");
 Vue.use(VueRouter);
 
 export default new VueRouter({
-  routes: [
-    {
-      path: "/",
-      name: "TheContainer",
-      redirect: "/metrics/overview",
-      component: TheContainer,
-      meta: {
-        requiresAuth: true,
-      },
-      children: [
+    routes: [
         {
-          path: "metrics",
-          redirect: "/metrics/overview",
-          name: "Metrics",
-          component: Metrics,
-          children: [
-            {
-              path: "overview",
-              name: "Overview",
-              component: Overview,
+            path: "/",
+            name: "TheContainer",
+            redirect: "/metrics/overview",
+            component: TheContainer,
+            meta: {
+                requiresAuth: true,
             },
-            {
-              path: "details",
-              name: "Details",
-              component: Details,
-            },
-          ],
+            children: [
+                {
+                    path: "metrics",
+                    redirect: "/metrics/overview",
+                    name: "Metrics",
+                    component: Metrics,
+                    children: [
+                        {
+                            path: "overview",
+                            name: "Overview",
+                            component: Overview,
+                        },
+                        {
+                            path: "details",
+                            name: "Details",
+                            component: Details,
+                        },
+                    ],
+                },
+                {
+                    path: "graphs",
+                    name: "Graphs",
+                    component: Graphs,
+                },
+                {
+                    path: "notifications",
+                    name: "Notifications",
+                    component: Notifications,
+                },
+                {
+                    path: "settings",
+                    name: "Settings",
+                    component: Settings,
+                },
+            ],
         },
         {
-          path: "graphs",
-          name: "Graphs",
-          component: Graphs,
+            path: "/login",
+            name: "Login",
+            component: Login,
+            meta: {},
         },
-        {
-          path: "notifications",
-          name: "Notifications",
-          component: Notifications,
-        },
-        {
-          path: "settings",
-          name: "Settings",
-          component: Settings,
-        },
-      ],
-    },
-    {
-      path: "/login",
-      name: "Login",
-      component: Login,
-      meta: {},
-    },
-  ],
+    ],
 });

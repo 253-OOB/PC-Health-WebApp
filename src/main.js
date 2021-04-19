@@ -83,7 +83,7 @@ async function callRequests() {
                 Vue.prototype.$tags = tags;
             })
             .catch((err) => {
-                console.error("Error fetching TAGS from API:\n"+err);
+                console.error("Error fetching TAGS from API:\n" + err);
             });
     }
 
@@ -96,7 +96,7 @@ async function callRequests() {
                 Vue.prototype.$organizations = organizations;
             })
             .catch((err) => {
-                console.error("Error fetching ORGANIZATIONS from API:\n"+err);
+                console.error("Error fetching ORGANIZATIONS from API:\n" + err);
             });
     }
 

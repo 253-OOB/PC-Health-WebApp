@@ -1,24 +1,24 @@
 <template>
-  <div id="details">
-      <b-table
-        fixed
-        striped
-        hover
-        :items="leafData"
-        :fields="fields"
-        :filter="keyword"
-        :per-page="perPage"
-        :current-page="currentPage"
-      >
-      </b-table>
+    <div id="details">
+        <b-table
+            fixed
+            striped
+            hover
+            :items="leafData"
+            :fields="fields"
+            :filter="keyword"
+            :per-page="perPage"
+            :current-page="currentPage"
+        >
+        </b-table>
 
-      <b-pagination
-      class="flex-aligned"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-      ></b-pagination>
+        <b-pagination
+            class="flex-aligned"
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+        ></b-pagination>
     </div>
 </template>
 
@@ -26,53 +26,53 @@
 import FleafDataJ from "@/components/json/formattedMLD.json";
 
 export default {
-  data() {
-    return {
-      // used for pagination
-      perPage: 12,
-      currentPage: 1,
-      // url: process.env.VUE_APP_POSTMAN_BASE_URL,
-      keyword: "",
-      fields: [
-        {
-          label: "Names",
-          key: "LeafNames",
-          sortable: true,
+    data() {
+        return {
+            // used for pagination
+            perPage: 12,
+            currentPage: 1,
+            // url: process.env.VUE_APP_POSTMAN_BASE_URL,
+            keyword: "",
+            fields: [
+                {
+                    label: "Names",
+                    key: "LeafNames",
+                    sortable: true,
+                },
+                {
+                    label: "RAM",
+                    key: "RAM",
+                    sortable: true,
+                },
+                {
+                    label: "Drive",
+                    key: "Name1",
+                    sortable: true,
+                },
+                {
+                    label: "Total Size",
+                    key: "Size1",
+                    sortable: true,
+                },
+                {
+                    label: "Free Space",
+                    key: "FreeSpace1",
+                    sortable: true,
+                },
+                {
+                    label: "Load%",
+                    key: "CurrentLoadPercentage",
+                    sortable: true,
+                },
+            ],
+            leafData: FleafDataJ,
+        };
+    },
+    computed: {
+        rows() {
+            return this.leafData.length;
         },
-        {
-          label: "RAM",
-          key: "RAM",
-          sortable: true,
-        },
-        {
-          label: "Drive",
-          key: "Name1",
-          sortable: true,
-        },
-        {
-          label: "Total Size",
-          key: "Size1",
-          sortable: true,
-        },
-        {
-          label: "Free Space",
-          key: "FreeSpace1",
-          sortable: true,
-        },
-        {
-          label: "Load%",
-          key: "CurrentLoadPercentage",
-          sortable: true,
-        },
-      ],
-      leafData: FleafDataJ,
-    };
-  },
-  computed: {
-    rows() {
-      return this.leafData.length
-    }
-  }
+    },
 };
 // watch: {
 //   obj(newValue) {
@@ -102,13 +102,13 @@ export default {
 
 <style scoped>
 #details {
-  color: black;
-  background-color: white;
-  border: solid black 1px;
-  height: 95%;
+    color: black;
+    background-color: white;
+    border: solid black 1px;
+    height: 95%;
 }
 
 #clear-btn {
-  background-color: #636f83;
+    background-color: #636f83;
 }
 </style>
