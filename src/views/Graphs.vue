@@ -52,33 +52,69 @@ export default {
   },
   methods: {
     setCpuUsed() {
-      var processList = [];
-      for (let dataPoint of this.$graphData["cpu"]) {
-        let summ = 0;
-        for (let core of JSON.parse(dataPoint["processors"]["data"])[0][
-          "Cores"
-        ]) {
-          summ += core["PercentProcessorTime"];
-        }
-        processList.push(summ);
-      }
-      this.cpuUsed = processList;
+      // fetches data from endpoint and stores it as json
+      fetch(process.env.VUE_APP_API_GET_CPU)
+        .then((response) => response.json())
+        .then((cpuData) => {
+          //parses the cpu data for pc0 and stores it in cpuUsed
+          var processList = [];
+          for (let dataPoint of cpuData) {
+            let summ = 0;
+            for (let core of JSON.parse(dataPoint["processors"]["data"])[0][
+              "Cores"
+            ]) {
+              summ += core["PercentProcessorTime"];
+            }
+            processList.push(summ);
+          }
+          this.cpuUsed = processList;
+        })
+        .catch((err) => {
+          console.error("Error fetching CPU:\n" + err);
+        });
+
+      //Success
+      console.log("Fetched CPU data");
     },
 
     setMemUsed() {
-      this.memUsed = this.$graphData["memory"].map(
-        (dataPoint) =>
-          JSON.parse(dataPoint["memory"]["data"])[0].TotalMemory -
-          JSON.parse(dataPoint["memory"]["data"])[0].AvailableMBytes
-      );
+      // fetches data from endpoint and stores it as json
+      fetch(process.env.VUE_APP_API_GET_MEMORY)
+        .then((response) => response.json())
+        .then((memData) => {
+          //parses the disk data for pc0 and stores it in cpuUsed
+          this.memUsed = memData.map(
+            (dataPoint) =>
+              JSON.parse(dataPoint["memory"]["data"])[0].TotalMemory -
+              JSON.parse(dataPoint["memory"]["data"])[0].AvailableMBytes
+          );
+        })
+        .catch((err) => {
+          console.error("Error fetching MEMORY:\n" + err);
+        });
+
+      //Success
+      console.log("Fetched MEMORY data");
     },
 
     setDiskUsed() {
-      this.diskUsed = this.$graphData["disk"].map(
-        (dataPoint) =>
-          JSON.parse(dataPoint["logical_disks"]["data"])[0].Size -
-          JSON.parse(dataPoint["logical_disks"]["data"])[0].FreeSpace
-      );
+      // fetches data from endpoint and stores it as json
+      fetch(process.env.VUE_APP_API_GET_LOGIC_DISK)
+        .then((response) => response.json())
+        .then((diskData) => {
+          //parses the disk data for pc0 and stores it in cpuUsed
+          this.diskUsed = diskData.map(
+            (dataPoint) =>
+              JSON.parse(dataPoint["logical_disks"]["data"])[0].Size -
+              JSON.parse(dataPoint["logical_disks"]["data"])[0].FreeSpace
+          );
+        })
+        .catch((err) => {
+          console.error("Error fetching DISK:\n" + err);
+        });
+
+      //Success
+      console.log("Fetched DISK data");
     },
   },
   mounted() {

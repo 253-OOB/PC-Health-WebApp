@@ -35,7 +35,7 @@ Vue.use(CoreuiVueCharts);
 ////////////////////////////////////
 ///////////// GLOBALS //////////////
 ////////////////////////////////////
-let graphData = new Object(); //dictionary for the graph data
+// let graphData = new Object(); //dictionary for the graph data
 let tags = new Object();
 let organizations = new Object();
 
@@ -74,56 +74,16 @@ router.beforeEach((to, from, next) => {
 
 async function callRequests() {
     // Put calls that need to be done before anything HERE
-
-    async function getCPU() {
-        // CPU Call 
-        await getReq(process.env.VUE_APP_API_GET_CPU_RE)
-            .then((response) => {
-                graphData["cpu"] = response;
-                console.log("Fetched cpu data from API");
-                Vue.prototype.$graphData = graphData;
-            })
-            .catch((err) => {
-                console.log("Error Occured fetching cpu from API:\n"+err);
-            });
-    }
-
-    async function getMemory() {
-        // Memory Call
-        await getReq(process.env.VUE_APP_API_GET_MEMORY_RE)
-            .then((response) => {
-                graphData["memory"] = response;
-                console.log("Fetched memory data from API");
-                Vue.prototype.$graphData = graphData;
-            })
-            .catch((err) => {
-                console.log("Error Occured fetching memory from API:\n"+err);
-            });
-    }
-
-    async function getDisk() {
-        // Disk Call
-        await getReq(process.env.VUE_APP_API_GET_LOGIC_DISK_RE)
-            .then((response) => {
-                graphData["disk"] = response;
-                console.log("Fetched disk data from API");
-                Vue.prototype.$graphData = graphData;
-            })
-            .catch((err) => {
-                console.log("Error Occured fetching disk from API:\n"+err);
-            });
-    }
-
     async function getTags() {
         // Tags Call
         await getReq(process.env.VUE_APP_API_GET_TAGS)
             .then((response) => {
                 tags = response;
-                console.log("Fetched tags from API");
+                console.log("Fetched TAGS from API");
                 Vue.prototype.$tags = tags;
             })
             .catch((err) => {
-                console.log("Error Occured fetching tags from API:\n"+err);
+                console.error("Error fetching TAGS from API:\n"+err);
             });
     }
 
@@ -132,18 +92,14 @@ async function callRequests() {
         await getReq(process.env.VUE_APP_API_GET_ORGS)
             .then((response) => {
                 organizations = response;
-                console.log("Fetched organizations from API");
+                console.log("Fetched ORGANIZATIONS from API");
                 Vue.prototype.$organizations = organizations;
             })
             .catch((err) => {
-                console.log("Error Occured fetching organizations from API:\n"+err);
+                console.error("Error fetching ORGANIZATIONS from API:\n"+err);
             });
     }
 
-
-    getCPU();
-    getMemory();
-    getDisk();
     getTags();
     getOrgs();
 }
