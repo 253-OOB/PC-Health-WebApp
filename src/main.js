@@ -63,6 +63,9 @@ router.beforeEach((to, from, next) => {
 
 async function launchVueApp() {
     Vue.prototype.$session = session;
+    Vue.prototype.$LoggedInOrg = false;
+    Vue.prototype.$organizationID = null;
+    Vue.prototype.$showModal = false;
 
     // Loads in vue app
     new Vue({
