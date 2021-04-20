@@ -1,58 +1,96 @@
 <template>
-    <header class="header flex-aligned">
-        <h1 id="title">PC Health</h1>
-        <div id="TheNavbar">
-            <!-- METRICS -->
-            <router-link
-                to="/metrics"
-                class="navbar-item flex-aligned"
-                v-on:click.native="navSwitch(0)"
-            >
-                <font-awesome-icon icon="info-circle" class="icons" />
-                <p class="text">Metrics</p>
-            </router-link>
+    <div class="TheHeader">
+        <!--                -->
+        <!-- Title + NavBar -->
+        <!--                -->
+        <header class="header flex-aligned">
+            <h1 id="title">PC Health</h1>
+            <div id="TheNavbar">
+                <!-- METRICS -->
+                <router-link
+                    to="/metrics"
+                    class="navbar-item flex-aligned"
+                    v-on:click.native="navSwitch(0)"
+                >
+                    <font-awesome-icon icon="info-circle" class="icons" />
+                    <p class="text">Metrics</p>
+                </router-link>
 
-            <!-- GRAPHS -->
-            <router-link
-                to="/graphs"
-                class="navbar-item flex-aligned"
-                v-on:click.native="navSwitch(1)"
-            >
-                <font-awesome-icon icon="chart-line" class="icons" />
-                <p class="text">Graphs</p>
-            </router-link>
+                <!-- GRAPHS -->
+                <router-link
+                    to="/graphs"
+                    class="navbar-item flex-aligned"
+                    v-on:click.native="navSwitch(1)"
+                >
+                    <font-awesome-icon icon="chart-line" class="icons" />
+                    <p class="text">Graphs</p>
+                </router-link>
 
-            <!-- NOTIFICATIONS -->
-            <router-link
-                to="/notifications"
-                class="navbar-item flex-aligned"
-                v-on:click.native="navSwitch(2)"
-            >
-                <font-awesome-icon icon="bell" class="icons" />
-                <p class="text">Notifications</p>
-            </router-link>
+                <!-- NOTIFICATIONS -->
+                <router-link
+                    to="/notifications"
+                    class="navbar-item flex-aligned"
+                    v-on:click.native="navSwitch(2)"
+                >
+                    <font-awesome-icon icon="bell" class="icons" />
+                    <p class="text">Notifications</p>
+                </router-link>
 
-            <!-- SETTINGS -->
-            <router-link
-                to="/settings"
-                class="navbar-item flex-aligned"
-                v-on:click.native="navSwitch(3)"
-            >
-                <font-awesome-icon icon="cog" class="icons" />
-                <p class="text">Settings</p>
-            </router-link>
-        </div>
-    </header>
+                <!-- SETTINGS -->
+                <router-link
+                    to="/settings"
+                    class="navbar-item flex-aligned"
+                    v-on:click.native="navSwitch(3)"
+                >
+                    <font-awesome-icon icon="cog" class="icons" />
+                    <p class="text">Settings</p>
+                </router-link>
+            </div>
+        </header>
+
+        <!--                    -->
+        <!-- Organization Select -->
+        <!--                     -->
+        <b-form-select
+            id="organizations"
+            v-model="orgSelected"
+            :options="orgOptions"
+        >
+            <template #first>
+                <b-form-select-option :value="null" disabled
+                    >-- Select Organization --</b-form-select-option
+                >
+            </template>
+            //TODO - set global var
+        </b-form-select>
+    </div>
 </template>
 
 <script>
 export default {
     name: "TheHeader",
+
     data() {
         return {
             lastnavSwitched: 0,
+            orgSelected: null,
+            orgOptions: [
+                //TODO set the value as the id itself
+                { value: "a", text: "Organization 1" },
+                { value: "b", text: "Organization 2" },
+            ],
         };
     },
+
+    watch: {
+        orgSelected(newVal) {
+            console.log("changed org");
+            this.$showModal = true;
+            //TODO check if sign in is correct
+            this.$organizationID = newVal;
+        },
+    },
+
     methods: {
         navSwitch(btn_num) {
             if (btn_num != this.lastnavSwitched) {
@@ -68,6 +106,7 @@ export default {
             btn.style.webkitBoxShadow = "inset 0px 0px 5px black";
         },
     },
+
     mounted() {
         this.navSwitch(0);
     },
@@ -112,5 +151,14 @@ export default {
 
 .text {
     margin: 0px;
+}
+
+#organizations {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 30%;
+    display: block;
 }
 </style>

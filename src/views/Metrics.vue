@@ -1,20 +1,10 @@
 <template>
     <div class="metrics">
+        <!--       -->
+        <!-- Tools -->
+        <!--       -->
         <b-input-group size="lg">
-            <!-- Dropdown Select 1 -->
-            <b-form-select
-                class="dropdowns"
-                id="organizations"
-                v-model="orgSelected"
-                :options="orgOptions"
-            >
-                <template #first>
-                    <b-form-select-option :value="null" disabled
-                        >-- Select Organization --</b-form-select-option
-                    >
-                </template>
-            </b-form-select>
-            <!-- Dropdown Select 2 -->
+            <!-- Dropdown Select -->
             <b-form-select
                 class="dropdowns"
                 id="tags"
@@ -45,7 +35,9 @@
             </b-input-group-append>
         </b-input-group>
 
+        <!--      -->
         <!-- Tabs -->
+        <!--      -->
         <div class="tab-group">
             <router-link
                 class="tab"
@@ -87,16 +79,13 @@ export default {
     data() {
         return {
             keyword: "",
+            organizationId: null,
+            organizationName: "",
 
             // Used for tabs
             activetab: 1,
 
             // Used for form select
-            orgSelected: null,
-            orgOptions: [
-                { value: "a", text: "Organization 1" },
-                { value: "b", text: "Organization 2" },
-            ],
             tagSelected: null,
             tagOptions: [
                 { value: "a", text: "Tag 1" },
@@ -122,41 +111,19 @@ export default {
             return "";
         },
 
-        // getTags() {
-        //     fetch(process.env.VUE_APP_API_GET_TAGS, {
-        //         method: "GET",
-        //         body: JSON.stringify(/*insert data here*/),
-        //     })
-        //         .then((response) => response.json())
-        //         .then((tagData) => {
-        //             console.log("Fetched TAGS");
-        //             console.log(tagData);
-        //         })
-        //         .catch((err) => {
-        //             console.error("Error fetching TAGS:\n" + err);
-        //         });
-        // },
-
         getOrgs() {
-
             const AccToken = this.getCookie("AccessToken");
             const RefToken = this.$session.RefreshToken;
 
-            console.log(AccToken);
-            console.log(RefToken);
-
             if (AccToken.length === 0)
                 console.error("Missing Cookie Access Token");
-
             else if (RefToken === null) console.error("Missing Refresh Token");
-
             else {
-                
                 fetch(process.env.VUE_APP_API_GET_ORGS, {
                     method: "POST",
                     headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
                         AccessToken: AccToken,
@@ -164,23 +131,42 @@ export default {
                     }),
                 })
                     .then((response) => {
-
                         return response.json();
                     })
                     .then((orgsData) => {
-                        console.log(orgsData);
                         console.log("Fetched ORGANIZATIONS");
+                        const organization = orgsData["organisations"][0];
+                        this.organizationId = organization["OrganisationID"];
+                        this.organizationName =
+                            organization["OrganisationName"];
+                        return organization["OrganisationID"];
                     })
                     .catch((err) => {
                         console.error("Error fetching ORGANIZATIONS:\n" + err);
                     });
             }
         },
+
+        getTags(orgID) {
+            fetch(process.env.VUE_APP_API_GET_TAGS + orgID, {
+                method: "GET",
+            })
+                .then((tagData) => {
+                    console.log("Fetched TAGS");
+                    console.log(tagData);
+                })
+                .catch((err) => {
+                    console.error("Error fetching TAGS:\n" + err);
+                });
+        },
+
+        main() {
+            this.getTags(this.getOrgs());
+        },
     },
 
     mounted() {
-        // this.getTags();
-        this.getOrgs();
+        // this.main();
     },
 };
 </script>
@@ -194,58 +180,5 @@ export default {
 .tools {
     display: flex;
     background-color: var(--background-color);
-}
-
-.tab-group {
-    height: 4%;
-    overflow: hidden;
-    background-color: #f1f1f1;
-}
-
-.tab {
-    height: 100%;
-    width: 50%;
-    float: left;
-    cursor: pointer;
-    padding-top: 5px;
-    transition: background-color 0.2s;
-    border: 1px solid #ccc;
-    border-right: none;
-    border-top: none;
-    background-color: #f1f1f1;
-    font-weight: bold;
-    text-decoration: none;
-    color: #484848;
-}
-
-/* First tab */
-.tab:first-of-type {
-    border-left: none;
-}
-
-/* Non Active Tab */
-.tab:hover {
-    background-color: #aaa;
-    color: #fff;
-}
-
-/* Active Tab */
-.tab.active {
-    background-color: #fff;
-    color: #484848;
-    border-bottom: 2px solid #fff;
-    cursor: default;
-}
-
-.content-group {
-    height: 96%;
-    width: 100%;
-}
-
-.tabcontent {
-    height: 100%;
-    width: 100%;
-    background-color: var(--background-color);
-    overflow: hidden;
 }
 </style>
