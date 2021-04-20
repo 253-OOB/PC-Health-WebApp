@@ -14,6 +14,8 @@ const Settings = () => import("@/views/Settings.vue");
 //Nested Views
 const Overview = () => import("@/views/nestedViews/Overview.vue");
 const Details = () => import("@/views/nestedViews/Details.vue");
+const Tags = () => import("@/views/nestedViews/SettingsTags.vue");
+const MonitoringApp = () => import("@/views/nestedViews/MonitoringApp.vue");
 
 const Login = () => import("@/pages/Login.vue");
 
@@ -60,8 +62,21 @@ export default new VueRouter({
                 },
                 {
                     path: "settings",
+                    redirect: "settings/app",
                     name: "Settings",
                     component: Settings,
+                    children: [
+                        {
+                            path: "app",
+                            name: "app",
+                            component: MonitoringApp,
+                        },
+                        {
+                            path: "tags",
+                            name: "Tags",
+                            component: Tags,
+                        },
+                    ],
                 },
             ],
         },
