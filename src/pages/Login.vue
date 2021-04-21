@@ -55,8 +55,7 @@ export default {
     methods: {
         login() {
             const url =
-                "https://pchealth-login.azurewebsites.net/api/fLoginAdmin?" +
-                this.constructQueryString();
+                process.env.VUE_APP_ADMIN_LOGIN + this.constructQueryString();
 
             fetch(url)
                 .then((res) => {
@@ -68,12 +67,7 @@ export default {
                     this.$session.RefreshToken = json.refreshToken;
                     this.$session.LoggedIn = true;
                     document.cookie = `AccessToken=${json.accessToken}`;
-
-                    if ("redirect" in this.$route.query) {
-                        this.$router.push(this.$route.query.redirect);
-                    } else {
-                        this.$router.push("/");
-                    }
+                    this.$router.push("/");
                 })
                 .catch((err) => {
                     // Handle the cases for errors.
