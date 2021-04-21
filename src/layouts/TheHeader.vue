@@ -61,7 +61,6 @@
                     >-- Select Organization --</b-form-select-option
                 >
             </template>
-            //TODO - set global var
         </b-form-select>
     </div>
 </template>
