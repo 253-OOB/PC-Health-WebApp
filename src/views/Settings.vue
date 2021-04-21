@@ -76,8 +76,10 @@
                         required
                     ></b-form-input>
                 </b-form-group>
+                <p v-if="invalid" style="color: red; text-align: center">
+                    Invalid Login Credentials
+                </p>
             </form>
-            <!-- ADD v-model="password" -->
         </b-modal>
     </div>
 </template>
@@ -97,6 +99,7 @@ export default {
             password: "",
             passState: null,
             submittedInfo: [],
+            invalid: false,
         };
     },
 
@@ -107,15 +110,19 @@ export default {
             this.nameState = null;
             this.password = "";
             this.passState = null;
+            this.invalid = false;
         },
         // Cancel -> revert
         handleCancel() {
+            this.invalid = false;
             this.activetab = 1;
         },
         // OK -> check if valid ? submit : revert
         handleOk(bvModalEvt) {
             // Prevent modal from closing
             bvModalEvt.preventDefault();
+            // hide previous invalid msg
+            this.invalid = false;
             // Trigger submit handler
             this.handleSubmit();
         },
@@ -134,17 +141,32 @@ export default {
                 this.activetab = 1;
                 return;
             }
-            // Login Succeeded
-            this.submittedInfo.push(this.username);
-            this.submittedInfo.push(this.password);
-            this.$LoggedInOrg = true;
-            this.$nextTick(() => {
-                this.$refs["orgLogin"].hide();
-            });
+            fetch(
+                process.env.VUE_APP_ORG_LOGIN +
+                    `Email=${this.username}&Password=${this.password}`,
+                {
+                    method: "GET",
+                }
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        this.activetab = 1;
+                        this.invalid = true;
+                        return;
+                    } else {
+                        // Login Succeeded
+                        this.$LoggedInOrg = true;
+                        this.$nextTick(() => {
+                            this.$refs["orgLogin"].hide();
+                        });
 
-            //TODO send to backend to check if creds are right
-            //redirect to tag page
-            this.$router.push("/settings/tags");
+                        //redirect to tag page
+                        this.$router.push("/settings/tags");
+                    }
+                })
+                .catch((err) => {
+                    console.log("Unexpected Error!\n" + err);
+                });
         },
     },
 
