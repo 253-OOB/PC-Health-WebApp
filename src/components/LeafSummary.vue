@@ -8,7 +8,7 @@
         <!--                               -->
         <!-- Modal for Notification Config -->
         <!--                               -->
-        <b-modal ref="config" :title="modalTitle">
+        <b-modal centered ref="config" :title="modalTitle">
             <form @submit.stop.prevent="handleSubmit">
                 <!-- Title -->
                 <b-form-group label="Title">
