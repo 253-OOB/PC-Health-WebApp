@@ -23,8 +23,13 @@ Built with
 
 ## Features
 
-- Display leaf data
-- Sort/Filter leaf data
+- Login in as an Admin/Organization
+- Display all leaves
+- Sort/Filter leaf data by name/tag/organization
+- Display leaf data at a specific point in time
+- Display leaf data over time using graphs
+- Download leaf app locally
+- Set up notifications
 
 ## Tutorials
 
