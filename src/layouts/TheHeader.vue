@@ -69,25 +69,19 @@
 <script>
 export default {
     name: "TheHeader",
-
     data() {
         return {
             lastnavSwitched: 0,
             orgSelected: null,
-            orgOptions: [
-                //TODO set the value as the id itself
-                { value: "a", text: "Organization 1" },
-                { value: "b", text: "Organization 2" },
-            ],
+            orgOptions: [],
         };
     },
 
     watch: {
+        //Set selected org as global $organizationID
         orgSelected(newVal) {
-            console.log("changed org");
-            this.$showModal = true;
-            //TODO check if sign in is correct
             this.$organizationID = newVal;
+            this.getTags();
         },
     },
 
@@ -105,9 +99,78 @@ export default {
             btn.style["boxShadow"] = "inset 0px 0px 5px black";
             btn.style.webkitBoxShadow = "inset 0px 0px 5px black";
         },
+
+        getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(";");
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == " ") {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        },
+
+        getOrgs() {
+            const AccToken = this.getCookie("AccessToken");
+            const RefToken = this.$session.RefreshToken;
+
+            if (AccToken.length === 0)
+                console.error("Missing Cookie Access Token");
+            else if (RefToken === null) console.error("Missing Refresh Token");
+            else {
+                fetch(process.env.VUE_APP_API_GET_ORGS, {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        AccessToken: AccToken,
+                        RefreshToken: RefToken,
+                    }),
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((orgsData) => {
+                        console.log("Fetched ORGANIZATIONS");
+                        //Add all organisations to orgOptions
+                        orgsData["organisations"].forEach((org) => {
+                            this.orgOptions.push({
+                                value: org.OrganisationID,
+                                text: org.OrganisationName,
+                            });
+                        });
+                    })
+                    .catch((err) => {
+                        console.error("Error fetching ORGANIZATIONS:\n" + err);
+                    });
+            }
+        },
+
+        getTags() {
+            fetch(process.env.VUE_APP_API_GET_TAGS + this.$organizationID, {
+                method: "GET",
+            })
+                .then((tagData) => {
+                    console.log("Fetched TAGS");
+                    console.log(tagData);
+                })
+                .catch((err) => {
+                    console.error("Error fetching TAGS:\n" + err);
+                });
+            //TODO when endpoint is ready, store tags in global var so we can access it later in metrics
+        },
     },
 
     mounted() {
+        this.getOrgs();
         this.navSwitch(0);
     },
 };
