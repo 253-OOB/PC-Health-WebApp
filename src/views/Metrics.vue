@@ -63,7 +63,7 @@
         <div class="content-group">
             <div v-if="activetab === 1" class="tabcontent">
                 <!-- overview -->
-                <router-view class="sub-content" />
+                <router-view class="sub-content" v-bind:passedtags="this.tags"/>
             </div>
             <div v-if="activetab === 2" class="tabcontent">
                 <!-- details -->
@@ -76,6 +76,10 @@
 <script>
 export default {
     name: "Metrics",
+
+    props: {
+        tags: Array,
+    },
 
     data() {
         return {
@@ -90,8 +94,6 @@ export default {
             tagTriggered: false,
             tagSelected: null,
             tagOptions: [
-                { value: "a", text: "Tag 1" },
-                { value: "b", text: "Tag 2" },
             ],
         };
     },
@@ -104,8 +106,14 @@ export default {
 
     watch: {
         tagTriggered() {
-            //FIXME figure out why i cant read any globals
-            console.log(this.$tags);
+            let tempList = [];
+            this.tags.forEach((tag) => {
+                tempList.push({
+                    value: tag["TagID"],
+                    text: tag["TagName"],
+                });
+            });
+            this.tagOptions = tempList;
         },
     },
 };

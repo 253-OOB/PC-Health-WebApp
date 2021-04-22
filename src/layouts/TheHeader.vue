@@ -73,6 +73,9 @@ export default {
             lastnavSwitched: 0,
             orgSelected: null,
             orgOptions: [],
+
+            //Tags
+            tagOptions: [],
         };
     },
 
@@ -80,11 +83,18 @@ export default {
         //Set selected org as global $organizationID
         orgSelected(newVal) {
             this.$organizationID = newVal;
-            this.getTags();
+            this.main();
         },
     },
 
     methods: {
+        async main() {
+            await this.getTags();
+            this.$emit("changeTags", this.tagOptions);
+        },
+
+        // Called everytime a new nav bar button is clicked
+        // Switches pages and gives an effect to show which page is selected
         navSwitch(btn_num) {
             if (btn_num != this.lastnavSwitched) {
                 var lastBtn = document.getElementsByClassName("navbar-item")[
@@ -99,6 +109,7 @@ export default {
             btn.style.webkitBoxShadow = "inset 0px 0px 5px black";
         },
 
+        // Called by getOrgs to retrieve specific cookie
         getCookie(cname) {
             var name = cname + "=";
             var decodedCookie = decodeURIComponent(document.cookie);
@@ -115,6 +126,8 @@ export default {
             return "";
         },
 
+        // Called as soon as app loads because everthing depends on orgs
+        // sets the orgs in orgOptions taken from api
         getOrgs() {
             const AccToken = this.getCookie("AccessToken");
             const RefToken = this.$session.RefreshToken;
@@ -147,27 +160,64 @@ export default {
                             });
                         });
                     })
-                    .catch((err) => {
-                        console.error("Error fetching ORGANIZATIONS:\n" + err);
-                    });
+                    .catch((err) =>
+                        console.error("Error fetching ORGANIZATIONS:\n" + err)
+                    );
             }
         },
 
-        getTags() {
-            fetch(process.env.VUE_APP_API_GET_TAGS + this.$organizationID, {
-                method: "GET",
-            })
-                .then((tagData) => {
-                    if (!tagData.ok) {
-                        throw new Error("Invalid Organization Selected");
-                    }
+        // Called when an organisation is selected
+        // gets all the tags for the selected org and saves them in tagOptions
+        async getTags() {
+            //Api Call
+            const response = await fetch(
+                process.env.VUE_APP_API_GET_TAGS + this.$organizationID,
+                {
+                    method: "GET",
+                }
+            );
+
+            try {
+                if (!response.ok) {
+                    throw new Error("Invalid Organization Selected");
+                } else {
+                    const tagJson = await response.json();
+
+                    //Add all tags to tagOptions
+                    tagJson["tags"].forEach((tag) => {
+                        this.tagOptions.push({
+                            OrganisationID: tag["OrganisationID"],
+                            TagID: tag["TagID"],
+                            TagName: tag["TagName"],
+                        });
+                    });
+
                     console.log("Fetched TAGS");
-                    this.$tags = tagData;
-                    //FIXME figure out why this isnt affecting the global
-                })
-                .catch((err) => {
-                    console.error("Error fetching TAGS:\n" + err);
-                });
+                }
+            } catch (err) {
+                console.error("Error fetching TAGS:\n" + err);
+            }
+
+            // fetch(process.env.VUE_APP_API_GET_TAGS + this.$organizationID, {
+            //     method: "GET",
+            // })
+            //     .then((response) => {
+            //         if (!response.ok)
+            //             throw new Error("Invalid Organization Selected");
+            //         return response.json();
+            //     })
+            //     .then((tagJson) => {
+            //         console.log("Fetched TAGS");
+            //         //Add all tags to tagOptions
+            //         tagJson["tags"].forEach((tag) => {
+            //             this.tags.push({
+            //                 OrganisationID: tag["OrganisationID"],
+            //                 TagID: tag["TagID"],
+            //                 TagName: tag["TagName"],
+            //             });
+            //         });
+            //     })
+            //     .catch((err) => console.error("Error fetching TAGS:\n" + err));
         },
     },
 

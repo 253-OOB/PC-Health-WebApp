@@ -95,6 +95,7 @@ export default {
     props: {
         metrics: Object,
         index: Number,
+        passedtags: Array,
     },
     data() {
         return {
@@ -102,7 +103,6 @@ export default {
             modalTitle: "",
             metricSelected: null,
             metricOptions: [
-                // TODO change values to match notifcation names
                 { value: 1, text: "Percent Processor Time (%)" },
                 { value: 2, text: "I/O Disk (B/s)" },
                 { value: 3, text: "Available Disk Space (GB)" },
