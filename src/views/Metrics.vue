@@ -8,6 +8,7 @@
             <b-form-select
                 class="dropdowns"
                 id="tags"
+                v-on:click.native="checkForNewTags"
                 v-model="tagSelected"
                 :options="tagOptions"
             >
@@ -86,6 +87,7 @@ export default {
             activetab: 1,
 
             // Used for form select
+            tagTriggered: false,
             tagSelected: null,
             tagOptions: [
                 { value: "a", text: "Tag 1" },
@@ -94,6 +96,18 @@ export default {
         };
     },
 
+    methods: {
+        checkForNewTags() {
+            this.tagTriggered = !this.tagTriggered;
+        },
+    },
+
+    watch: {
+        tagTriggered() {
+            //FIXME figure out why i cant read any globals
+            console.log(this.$tags);
+        },
+    },
 };
 </script>
 

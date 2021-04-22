@@ -158,13 +158,16 @@ export default {
                 method: "GET",
             })
                 .then((tagData) => {
+                    if (!tagData.ok) {
+                        throw new Error("Invalid Organization Selected");
+                    }
                     console.log("Fetched TAGS");
-                    console.log(tagData);
+                    this.$tags = tagData;
+                    //FIXME figure out why this isnt affecting the global
                 })
                 .catch((err) => {
                     console.error("Error fetching TAGS:\n" + err);
                 });
-            //TODO when endpoint is ready, store tags in global var so we can access it later in metrics
         },
     },
 
