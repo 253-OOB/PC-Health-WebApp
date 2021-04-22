@@ -4,7 +4,6 @@
             v-for="(component, index) in JSONcomponentLists"
             v-bind:index="index"
             v-bind:metrics="component"
-            v-bind:passedtags="this.passedtags"
             :key="index"
             :is="componentName"
         ></component>
@@ -17,10 +16,6 @@ import FleafDataJ from "@/components/json/formattedMLD.json";
 
 export default {
     name: "Overview",
-
-    props: {
-        passedtags: Array,
-    },
 
     data() {
         return {

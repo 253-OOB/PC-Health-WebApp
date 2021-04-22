@@ -63,7 +63,7 @@
         <div class="content-group">
             <div v-if="activetab === 1" class="tabcontent">
                 <!-- overview -->
-                <router-view class="sub-content" v-bind:passedtags="this.tags"/>
+                <router-view class="sub-content" />
             </div>
             <div v-if="activetab === 2" class="tabcontent">
                 <!-- details -->
@@ -76,16 +76,9 @@
 <script>
 export default {
     name: "Metrics",
-
-    props: {
-        tags: Array,
-    },
-
     data() {
         return {
             keyword: "",
-            organizationId: null,
-            organizationName: "",
 
             // Used for tabs
             activetab: 1,
@@ -93,8 +86,7 @@ export default {
             // Used for form select
             tagTriggered: false,
             tagSelected: null,
-            tagOptions: [
-            ],
+            tagOptions: [],
         };
     },
 
@@ -105,15 +97,21 @@ export default {
     },
 
     watch: {
+        //When the user wants to see what tags are available it will fetch the most recent tags
         tagTriggered() {
             let tempList = [];
-            this.tags.forEach((tag) => {
+            this.$store.state.tags.forEach((tag) => {
                 tempList.push({
                     value: tag["TagID"],
                     text: tag["TagName"],
                 });
             });
             this.tagOptions = tempList;
+        },
+
+        //When a tag is selected in the dropdown
+        tagSelected(newValue) {
+            this.$store.state.tagSelected = newValue;
         },
     },
 };

@@ -95,7 +95,6 @@ export default {
     props: {
         metrics: Object,
         index: Number,
-        passedtags: Array,
     },
     data() {
         return {

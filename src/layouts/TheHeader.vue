@@ -73,16 +73,13 @@ export default {
             lastnavSwitched: 0,
             orgSelected: null,
             orgOptions: [],
-
-            //Tags
-            tagOptions: [],
         };
     },
 
     watch: {
-        //Set selected org as global $organizationID
+        //Set selected org as global organizationID
         orgSelected(newVal) {
-            this.$organizationID = newVal;
+            this.$store.state.organizationID = newVal;
             this.main();
         },
     },
@@ -90,7 +87,6 @@ export default {
     methods: {
         async main() {
             await this.getTags();
-            this.$emit("changeTags", this.tagOptions);
         },
 
         // Called everytime a new nav bar button is clicked
@@ -129,6 +125,7 @@ export default {
         // Called as soon as app loads because everthing depends on orgs
         // sets the orgs in orgOptions taken from api
         getOrgs() {
+            this.$store.state.organizations = [];
             const AccToken = this.getCookie("AccessToken");
             const RefToken = this.$session.RefreshToken;
 
@@ -154,6 +151,10 @@ export default {
                         console.log("Fetched ORGANIZATIONS");
                         //Add all organisations to orgOptions
                         orgsData["organisations"].forEach((org) => {
+                            this.$store.state.organizations.push({
+                                value: org.OrganisationID,
+                                text: org.OrganisationName,
+                            });
                             this.orgOptions.push({
                                 value: org.OrganisationID,
                                 text: org.OrganisationName,
@@ -169,9 +170,12 @@ export default {
         // Called when an organisation is selected
         // gets all the tags for the selected org and saves them in tagOptions
         async getTags() {
+            this.$store.state.tags = [];
+
             //Api Call
             const response = await fetch(
-                process.env.VUE_APP_API_GET_TAGS + this.$organizationID,
+                process.env.VUE_APP_API_GET_TAGS +
+                    this.$store.state.organizationID,
                 {
                     method: "GET",
                 }
@@ -185,7 +189,7 @@ export default {
 
                     //Add all tags to tagOptions
                     tagJson["tags"].forEach((tag) => {
-                        this.tagOptions.push({
+                        this.$store.state.tags.push({
                             OrganisationID: tag["OrganisationID"],
                             TagID: tag["TagID"],
                             TagName: tag["TagName"],
@@ -197,27 +201,6 @@ export default {
             } catch (err) {
                 console.error("Error fetching TAGS:\n" + err);
             }
-
-            // fetch(process.env.VUE_APP_API_GET_TAGS + this.$organizationID, {
-            //     method: "GET",
-            // })
-            //     .then((response) => {
-            //         if (!response.ok)
-            //             throw new Error("Invalid Organization Selected");
-            //         return response.json();
-            //     })
-            //     .then((tagJson) => {
-            //         console.log("Fetched TAGS");
-            //         //Add all tags to tagOptions
-            //         tagJson["tags"].forEach((tag) => {
-            //             this.tags.push({
-            //                 OrganisationID: tag["OrganisationID"],
-            //                 TagID: tag["TagID"],
-            //                 TagName: tag["TagName"],
-            //             });
-            //         });
-            //     })
-            //     .catch((err) => console.error("Error fetching TAGS:\n" + err));
         },
     },
 

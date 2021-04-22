@@ -155,7 +155,7 @@ export default {
                         return;
                     } else {
                         // Login Succeeded
-                        this.$LoggedInOrg = true;
+                        this.$store.state.LoggedInOrg = true;
                         this.$nextTick(() => {
                             this.$refs["orgLogin"].hide();
                         });
@@ -173,9 +173,12 @@ export default {
     watch: {
         //ask for login if first time opening tag settings or login didnt work
         activetab(newValue) {
-            if (newValue === 2 && !this.$LoggedInOrg) {
+            if (newValue === 2 && !this.$store.state.LoggedInOrg) {
                 this.$refs["orgLogin"].show();
-            } else if (newValue === 2 && this.$LoggedInOrg) {
+            } else if (
+                newValue === 2 &&
+                this.$store.state.LoggedInOrg
+            ) {
                 //case where user has logged in before in the session
                 this.$router.push("/settings/tags");
             }

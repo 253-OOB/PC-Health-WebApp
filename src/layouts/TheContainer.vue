@@ -22,7 +22,7 @@ export default {
 
     methods: {
         setTagOptions(tags) {
-            this.tagOptions= tags;
+            this.tagOptions = tags;
         },
     },
 };
