@@ -32,6 +32,10 @@ Vue.use(BootstrapVue);
 import CoreuiVueCharts from "@coreui/vue-chartjs";
 Vue.use(CoreuiVueCharts);
 
+// Vue context
+import VueContext from "vue-context";
+Vue.use(VueContext);
+
 ////////////////////////////////////
 ///////////// GLOBALS //////////////
 ////////////////////////////////////
@@ -63,8 +67,8 @@ router.beforeEach((to, from, next) => {
 
 async function launchVueApp() {
     Vue.prototype.$session = session;
-    Vue.prototype.$LoggedInOrg = false;
     Vue.prototype.$organizationID = null;
+    Vue.prototype.$tags = null;
 
     // Loads in vue app
     new Vue({

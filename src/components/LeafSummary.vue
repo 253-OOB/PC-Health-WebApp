@@ -1,5 +1,9 @@
 <template>
-    <div @click="showModal" id="leaf-wrapper">
+    <div
+        @click="showModal"
+        @contextmenu.prevent="$refs.menu.open"
+        id="leaf-wrapper"
+    >
         <div class="title flex-aligned">
             <span>{{ metrics.LeafNames }}</span>
         </div>
@@ -21,7 +25,7 @@
                 </b-form-group>
 
                 <!-- Dropdowns -->
-                <div class="flex-aligned">
+                <div class="flex-aligned" style="justify-content: space-around">
                     <!-- Metric -->
                     <b-form-select
                         id="metric"
@@ -59,24 +63,50 @@
                 </div>
             </form>
         </b-modal>
+
+        <!--                       -->
+        <!-- Context Menu for Tags -->
+        <!--                       -->
+        <vue-context ref="menu">
+            <li>
+                <!-- TODO make tag list from endpoint -->
+                <a href="#" @click.prevent="onClick($event.target.innerText)"
+                    >Tag A</a
+                >
+            </li>
+            <li>
+                <a href="#" @click.prevent="onClick($event.target.innerText)"
+                    >Tag B</a
+                >
+            </li>
+        </vue-context>
     </div>
 </template>
 
 <script>
+import VueContext from "vue-context";
+import "vue-context/dist/css/vue-context.css";
+
 export default {
     name: "LeafSummary",
+    components: {
+        VueContext,
+    },
     props: {
         metrics: Object,
         index: Number,
     },
     data() {
         return {
-            modalTitle: "Notification Configuration for ",
+            //Modal Menu
+            modalTitle: "",
             metricSelected: null,
             metricOptions: [
-                { value: 1, text: "Dummy 1" },
-                { value: 2, text: "Dummy 2" },
-                { value: 3, text: "Dummy 3" },
+                // TODO change values to match notifcation names
+                { value: 1, text: "Percent Processor Time (%)" },
+                { value: 2, text: "I/O Disk (B/s)" },
+                { value: 3, text: "Available Disk Space (GB)" },
+                { value: 3, text: "Available RAM (MB)" },
             ],
             operatorSelected: null,
             operatorOptions: [
@@ -85,9 +115,13 @@ export default {
                 { value: 3, text: "<" },
             ],
             valueSelected: null,
+
+            //Context Menu
+            sharedState: { active: false },
         };
     },
     methods: {
+        //Modal Menu
         checkOffline(index) {
             let elem = document.getElementsByClassName("title")[index];
             if (!this.metrics.isOnline) {
@@ -98,8 +132,14 @@ export default {
         },
 
         showModal() {
-            this.modalTitle += this.metrics.LeafNames;
+            this.modalTitle =
+                "Notification Configuration for " + this.metrics.LeafNames;
             this.$refs["config"].show();
+        },
+
+        // Context Menu
+        onclick(text) {
+            alert(`You clicked ${text}!`);
         },
     },
     mounted() {
@@ -133,8 +173,16 @@ export default {
 }
 
 /* inside modal */
-.modal-dropdown{
-    width: 1fr;
+.modal-dropdown {
     text-align: center;
+}
+#metric {
+    width: 50%;
+}
+#operator {
+    width: 20%;
+}
+#value {
+    width: 20%;
 }
 </style>
