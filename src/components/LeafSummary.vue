@@ -6,7 +6,7 @@
         id="leaf-wrapper"
     >
         <div class="title flex-aligned">
-            <span>{{ metrics.LeafNames }}</span>
+            <span>{{ metrics.AssignedName }}</span>
         </div>
         <div id="leaf-info">Lorem ipsum</div>
 

@@ -20,11 +20,52 @@ export default {
     data() {
         return {
             componentName: LeafSummary,
-            JSONcomponentLists: FleafDataJ,
+            JSONcomponentLists: null,
         };
     },
     components: {
         LeafSummary,
+    },
+
+    methods: {
+        getLeafs(orgID) {
+            this.$store.dispatch("fetchTokens");
+            const AccToken = this.$store.state.AccessToken;
+            const RefToken = this.$store.state.RefreshToken;
+
+            fetch(
+                process.env.VUE_APP_API_GET_LEAFS + "?OrganisationID=" + orgID,
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        AccessToken: AccToken,
+                        RefreshToken: RefToken,
+                    }),
+                }
+            )
+                .then((response) => {
+                    return response.json();
+                })
+                .then((LeafData) => {
+                    this.JSONcomponentLists = LeafData.leaves;
+                })
+                .catch((err) => console.log("Error fetching Leafs: " + err));
+        },
+    },
+    created() {
+        this.unsubscribe = this.$store.subscribe((mutation, state) => {
+            if (mutation.type === "updateOrgID") {
+                this.selectedOrg = state.organizationsID;
+                if (this.$store.state.useDummyData) {
+                    this.JSONcomponentLists = FleafDataJ;
+                } else {
+                    this.getLeafs(this.selectedOrg);
+                }
+            }
+        });
+    },
+    beforeDestroy() {
+        this.unsubscribe();
     },
 };
 </script>

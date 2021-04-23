@@ -1,6 +1,6 @@
 [
     {
-        "LeafNames": "DESKTOP-1",
+        "AssignedName": "DESKTOP-1",
         "RAM": "6065",
         "Name1": "C:",
         "Size1": "53107597312",
@@ -9,7 +9,7 @@
         "isOnline": true
     },
     {
-        "LeafNames": "DESKTOP-2",
+        "AssignedName": "DESKTOP-2",
         "RAM": "4485",
         "Name1": "C:",
         "Size1": "19596412",
@@ -18,7 +18,7 @@
         "isOnline": false
     },
     {
-        "LeafNames": "DESKTOP-3",
+        "AssignedName": "DESKTOP-3",
         "RAM": "9525",
         "Name1": "C:",
         "Size1": "425424523",
@@ -27,7 +27,7 @@
         "isOnline": true
     },
     {
-        "LeafNames": "DESKTOP-4",
+        "AssignedName": "DESKTOP-4",
         "RAM": "1110",
         "Name1": "C:",
         "Size1": "19596412",
@@ -36,7 +36,7 @@
         "isOnline": false
     },
     {
-        "LeafNames": "DESKTOP-5",
+        "AssignedName": "DESKTOP-5",
         "RAM": "6065",
         "Name1": "C:",
         "Size1": "53107597312",
@@ -45,7 +45,7 @@
         "isOnline": true
     },
     {
-        "LeafNames": "DESKTOP-6",
+        "AssignedName": "DESKTOP-6",
         "RAM": "4485",
         "Name1": "C:",
         "Size1": "19596412",
@@ -54,7 +54,7 @@
         "isOnline": false
     },
     {
-        "LeafNames": "DESKTOP-7",
+        "AssignedName": "DESKTOP-7",
         "RAM": "9525",
         "Name1": "C:",
         "Size1": "425424523",
@@ -63,7 +63,7 @@
         "isOnline": true
     },
     {
-        "LeafNames": "DESKTOP-8",
+        "AssignedName": "DESKTOP-8",
         "RAM": "1110",
         "Name1": "C:",
         "Size1": "19596412",
@@ -72,7 +72,7 @@
         "isOnline": false
     },
     {
-        "LeafNames": "DESKTOP-9",
+        "AssignedName": "DESKTOP-9",
         "RAM": "6065",
         "Name1": "C:",
         "Size1": "53107597312",
@@ -81,7 +81,7 @@
         "isOnline": true
     },
     {
-        "LeafNames": "DESKTOP-10",
+        "AssignedName": "DESKTOP-10",
         "RAM": "4485",
         "Name1": "C:",
         "Size1": "19596412",
@@ -90,7 +90,7 @@
         "isOnline": false
     },
     {
-        "LeafNames": "DESKTOP-11",
+        "AssignedName": "DESKTOP-11",
         "RAM": "9525",
         "Name1": "C:",
         "Size1": "425424523",
@@ -99,7 +99,7 @@
         "isOnline": false
     },
     {
-        "LeafNames": "DESKTOP-12",
+        "AssignedName": "DESKTOP-12",
         "RAM": "1110",
         "Name1": "C:",
         "Size1": "19596412",
@@ -108,7 +108,7 @@
         "isOnline": false
     },
     {
-        "LeafNames": "DESKTOP-13",
+        "AssignedName": "DESKTOP-13",
         "RAM": "1110",
         "Name1": "C:",
         "Size1": "19596412",
@@ -117,7 +117,7 @@
         "isOnline": false
     },
     {
-        "LeafNames": "DESKTOP-14",
+        "AssignedName": "DESKTOP-14",
         "RAM": "1110",
         "Name1": "C:",
         "Size1": "19596412",
@@ -126,7 +126,7 @@
         "isOnline": false
     },
     {
-        "LeafNames": "DESKTOP-15",
+        "AssignedName": "DESKTOP-15",
         "RAM": "1110",
         "Name1": "C:",
         "Size1": "19596412",
@@ -135,7 +135,7 @@
         "isOnline": true
     },
     {
-        "LeafNames": "DESKTOP-16",
+        "AssignedName": "DESKTOP-16",
         "RAM": "1110",
         "Name1": "C:",
         "Size1": "19596412",

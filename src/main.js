@@ -15,16 +15,36 @@ Vue.use(Vuex);
 // https://vuex.vuejs.org/guide/#the-simplest-store
 const store = new Vuex.Store({
     state: {
-        tags: null,
-        tagSelected: null,
-        organizations: null,
-        organizationsID: null,
-
-        LoggedInOrg: false,
+        tags: null, //list of tags per organizationsID
+        tagSelected: null, //tag selected in dropdown
+        organizations: null, //list of organizations
+        organizationsID: null, //organization select in dropdown
+        LoggedInOrg: false, //keep you logged in settings for org
+        useDummyData: false,
+        AccessToken: null,
+        RefreshToken: null,
+    },
+    getters: {
+        //might be able to use filters https://blog.pusher.com/getting-started-vuex-state-management-vuejs/
+        organizationsID: (state) => state.organizationsID,
     },
     mutations: {
-        increment(state) {
-            state.count++;
+        updateOrgID(state, organizationsID) {
+            Vue.set(state, "organizationsID", organizationsID);
+        },
+        updateAccTok(state, token) {
+            Vue.set(state, "AccessToken", token);
+        },
+        updateRefTok(state, token) {
+            Vue.set(state, "RefreshToken", token);
+        },
+    },
+    actions: {
+        fetchTokens() {
+            const AccToken = getCookie("AccessToken");
+            const RefToken = session.RefreshToken;
+            this.commit('updateAccTok', AccToken);
+            this.commit('updateRefTok', RefToken);
         },
     },
 });
@@ -84,6 +104,22 @@ router.beforeEach((to, from, next) => {
         next();
     }
 });
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == " ") {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 async function launchVueApp() {
     Vue.prototype.$session = session;

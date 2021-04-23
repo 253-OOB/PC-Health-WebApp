@@ -76,17 +76,21 @@ export default {
         };
     },
 
+    mounted() {
+        this.navSwitch(0);
+        this.callGetOrgs();
+    },
+
     watch: {
         //Set selected org as global organizationID
         orgSelected(newVal) {
-            this.$store.state.organizationID = newVal;
-            this.main();
+            this.getTags(newVal);
         },
     },
 
     methods: {
-        async main() {
-            await this.getTags();
+        async callGetOrgs() {
+            await this.getOrgs();
         },
 
         // Called everytime a new nav bar button is clicked
@@ -105,77 +109,63 @@ export default {
             btn.style.webkitBoxShadow = "inset 0px 0px 5px black";
         },
 
-        // Called by getOrgs to retrieve specific cookie
-        getCookie(cname) {
-            var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var ca = decodedCookie.split(";");
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == " ") {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        },
-
         // Called as soon as app loads because everthing depends on orgs
         // sets the orgs in orgOptions taken from api
-        getOrgs() {
+        async getOrgs() {
             this.$store.state.organizations = [];
-            const AccToken = this.getCookie("AccessToken");
-            const RefToken = this.$session.RefreshToken;
+            this.$store.dispatch("fetchTokens");
+            const AccToken = this.$store.state.AccessToken;
+            const RefToken = this.$store.state.RefreshToken;
 
             if (AccToken.length === 0)
                 console.error("Missing Cookie Access Token");
             else if (RefToken === null) console.error("Missing Refresh Token");
             else {
-                fetch(process.env.VUE_APP_API_GET_ORGS, {
-                    method: "POST",
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        AccessToken: AccToken,
-                        RefreshToken: RefToken,
-                    }),
-                })
-                    .then((response) => {
-                        return response.json();
-                    })
-                    .then((orgsData) => {
-                        console.log("Fetched ORGANIZATIONS");
-                        //Add all organisations to orgOptions
-                        orgsData["organisations"].forEach((org) => {
-                            this.$store.state.organizations.push({
-                                value: org.OrganisationID,
-                                text: org.OrganisationName,
-                            });
-                            this.orgOptions.push({
-                                value: org.OrganisationID,
-                                text: org.OrganisationName,
-                            });
-                        });
-                    })
-                    .catch((err) =>
-                        console.error("Error fetching ORGANIZATIONS:\n" + err)
+                try {
+                    const response = await fetch(
+                        process.env.VUE_APP_API_GET_ORGS,
+                        {
+                            method: "POST",
+                            headers: {
+                                Accept: "application/json",
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                AccessToken: AccToken,
+                                RefreshToken: RefToken,
+                            }),
+                        }
                     );
+                    const orgsData = await response.json();
+                    console.log("Fetched ORGANIZATIONS");
+                    //Add all organisations to orgOptions
+                    orgsData["organisations"].forEach((org) => {
+                        this.$store.state.organizations.push({
+                            value: org.OrganisationID,
+                            text: org.OrganisationName,
+                        });
+                        this.orgOptions.push({
+                            value: org.OrganisationID,
+                            text: org.OrganisationName,
+                        });
+                        if (this.$store.state.organizationsID === null)
+                            this.orgSelected = org.OrganisationID;
+                    });
+                } catch (err) {
+                    console.error("Error fetching ORGANIZATIONS:\n" + err);
+                }
             }
         },
 
         // Called when an organisation is selected
         // gets all the tags for the selected org and saves them in tagOptions
-        async getTags() {
+        async getTags(newVal) {
+            this.$store.commit("updateOrgID", newVal);
             this.$store.state.tags = [];
-
             //Api Call
             const response = await fetch(
                 process.env.VUE_APP_API_GET_TAGS +
-                    this.$store.state.organizationID,
+                    this.$store.state.organizationsID,
                 {
                     method: "GET",
                 }
@@ -202,11 +192,6 @@ export default {
                 console.error("Error fetching TAGS:\n" + err);
             }
         },
-    },
-
-    mounted() {
-        this.getOrgs();
-        this.navSwitch(0);
     },
 };
 </script>
