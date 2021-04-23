@@ -26,8 +26,7 @@ export default {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 
-    /* global font color */
-    color: var(--font-color);
+    /* global font */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 

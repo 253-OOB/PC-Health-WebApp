@@ -30,6 +30,7 @@ export default {
 
 <style scoped>
 #TheContainer {
+    color: var(--font-color);
     text-align: center;
     height: 100vh;
     width: 100vw;

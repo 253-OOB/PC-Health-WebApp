@@ -9,7 +9,9 @@
                         data: cpuUsed,
                     },
                 ]"
-                :options="{ responsive: true }"
+                :options="{
+                    responsive: true,
+                }"
             />
         </div>
 
