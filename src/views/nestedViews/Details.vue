@@ -40,7 +40,7 @@ export default {
             fields: [
                 {
                     label: "Names",
-                    key: "LeafNames",
+                    key: "AssignedName",
                     sortable: true,
                 },
                 {
