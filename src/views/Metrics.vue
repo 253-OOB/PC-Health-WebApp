@@ -99,14 +99,28 @@ export default {
     watch: {
         //When the user wants to see what tags are available it will fetch the most recent tags
         tagTriggered() {
-            let tempList = [];
-            this.$store.state.tags.forEach((tag) => {
-                tempList.push({
-                    value: tag["TagID"],
-                    text: tag["TagName"],
-                });
-            });
-            this.tagOptions = tempList;
+            try {
+                if (this.$store.state.tags === null) {
+                    throw new Error("No Org");
+                } else if (this.$store.state.tags.length < 1) {
+                    throw new Error("0 Tags");
+                } else {
+                    let tempList = [];
+                    this.$store.state.tags.forEach((tag) => {
+                        tempList.push({
+                            value: tag["TagID"],
+                            text: tag["TagName"],
+                        });
+                    });
+                    this.tagOptions = tempList;
+                }
+            } catch (err) {
+                if (err.message === "No Org") {
+                    alert("Select an Organization first");
+                } else if (err.message === "0 Tags") {
+                    alert("Add Tags first (in Settings Page)");
+                }
+            }
         },
 
         //When a tag is selected in the dropdown

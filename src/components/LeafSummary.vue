@@ -2,6 +2,7 @@
     <div
         @click="showModal"
         @contextmenu.prevent="$refs.menu.open"
+        @click.right="checkIfTagsExist"
         id="leaf-wrapper"
     >
         <div class="title flex-aligned">
@@ -69,14 +70,13 @@
         <!--                       -->
         <vue-context ref="menu">
             <li>
-                <!-- TODO make tag list from endpoint -->
-                <a href="#" @click.prevent="onClick($event.target.innerText)"
-                    >Tag A</a
+                <a
+                    v-for="(tag, index) in this.$store.state.tags"
+                    :key="index"
+                    href="#"
+                    @click.prevent="onClick(tag['TagID'])"
                 >
-            </li>
-            <li>
-                <a href="#" @click.prevent="onClick($event.target.innerText)"
-                    >Tag B</a
+                    {{ tag["TagName"] }}</a
                 >
             </li>
         </vue-context>
@@ -100,6 +100,7 @@ export default {
         return {
             //Modal Menu
             modalTitle: "",
+
             metricSelected: null,
             metricOptions: [
                 { value: 1, text: "Percent Processor Time (%)" },
@@ -107,16 +108,15 @@ export default {
                 { value: 3, text: "Available Disk Space (GB)" },
                 { value: 3, text: "Available RAM (MB)" },
             ],
+
             operatorSelected: null,
             operatorOptions: [
                 { value: 1, text: "=" },
                 { value: 2, text: ">" },
                 { value: 3, text: "<" },
             ],
-            valueSelected: null,
 
-            //Context Menu
-            sharedState: { active: false },
+            valueSelected: null,
         };
     },
     methods: {
@@ -139,6 +139,24 @@ export default {
         // Context Menu
         onclick(text) {
             alert(`You clicked ${text}!`);
+        },
+
+        checkIfTagsExist() {
+            //TODO disable open of context menu if tags dont exist
+            try {
+                if (this.$store.state.tags === null) {
+                    throw new Error("No Org");
+                } else if (this.$store.state.tags.length < 1) {
+                    throw new Error("0 Tags");
+                }
+            } catch (err) {
+                if (err.message === "No Org") {
+                    alert("Select an Organization first");
+                }
+                else if (err.message === "0 Tags") {
+                    alert("Add Tags first (in Settings Page)");
+                }
+            }
         },
     },
     mounted() {
