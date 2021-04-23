@@ -8,7 +8,15 @@
         <div class="title flex-aligned">
             <span>{{ metrics.AssignedName }}</span>
         </div>
-        <div id="leaf-info">Lorem ipsum</div>
+        <div class="leaf-tags-grp">
+            <div
+                class="leaf-tag"
+                v-for="(tag, index) in assignedTagNames"
+                :key="index"
+            >
+                {{ tag }}
+            </div>
+        </div>
 
         <!--                               -->
         <!-- Modal for Notification Config -->
@@ -100,7 +108,6 @@ export default {
         return {
             //Modal Menu
             modalTitle: "",
-
             metricSelected: null,
             metricOptions: [
                 { value: 1, text: "Percent Processor Time (%)" },
@@ -108,15 +115,16 @@ export default {
                 { value: 3, text: "Available Disk Space (GB)" },
                 { value: 3, text: "Available RAM (MB)" },
             ],
-
             operatorSelected: null,
             operatorOptions: [
                 { value: 1, text: "=" },
                 { value: 2, text: ">" },
                 { value: 3, text: "<" },
             ],
-
             valueSelected: null,
+
+            //Tags
+            assignedTagNames: [],
         };
     },
     methods: {
@@ -129,7 +137,6 @@ export default {
                 elem.style.backgroundColor = "rgb(36, 255, 54)"; //blue
             }
         },
-
         showModal() {
             this.modalTitle =
                 "Notification Configuration for " + this.metrics.LeafNames;
@@ -140,9 +147,7 @@ export default {
         onclick(text) {
             alert(`You clicked ${text}!`);
         },
-
         checkIfTagsExist() {
-            //TODO disable open of context menu if tags dont exist
             try {
                 if (this.$store.state.tags === null) {
                     throw new Error("No Org");
@@ -152,15 +157,42 @@ export default {
             } catch (err) {
                 if (err.message === "No Org") {
                     alert("Select an Organization first");
-                }
-                else if (err.message === "0 Tags") {
+                } else if (err.message === "0 Tags") {
                     alert("Add Tags first (in Settings Page)");
                 }
             }
         },
+
+        //Tags
+        getAssignedTagNames() {
+            try {
+                const tagNames = [];
+                const allTags = this.$store.state.tags;
+                this.metrics.tags.forEach((tag) => {
+                    if (tag["TagID"] == allTags[tag["TagID"] - 1]["TagID"]) {
+                        tagNames.push(allTags[tag["TagID"] - 1]["TagName"]);
+                    }
+                });
+                this.assignedTagNames = tagNames;
+            } catch (err) {
+                return;
+            }
+        },
+    },
+    created() {
+        //track if tags update so we can redisplay other leafs
+        this.unsubscribe = this.$store.subscribe((mutation) => {
+            if (mutation.type === "updateTags") {
+                this.getAssignedTagNames();
+            }
+        });
+    },
+    beforeDestroy() {
+        this.unsubscribe();
     },
     mounted() {
         this.checkOffline(this.index);
+        this.getAssignedTagNames();
     },
 };
 </script>
@@ -184,8 +216,16 @@ export default {
     height: 30%;
 }
 
-#leaf-info {
-    padding: 10px 7px 2px 5px;
+.leaf-tags-grp {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.leaf-tag {
+    border: solid 2px var(--spacer-color);
+    border-radius: 10px;
+    padding: 2px;
+    margin: 10px 2px 0 0;
     height: 70%;
 }
 

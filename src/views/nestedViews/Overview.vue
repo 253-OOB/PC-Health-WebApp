@@ -53,8 +53,8 @@ export default {
         },
     },
     created() {
+        //track if organization selected is changed and display other leafs
         if (this.$store.state.organizationID === null) {
-            //track if organization selected is changed and display other leafs
             this.unsubscribe = this.$store.subscribe((mutation, state) => {
                 if (mutation.type === "updateOrgID") {
                     this.selectedOrg = state.organizationID;

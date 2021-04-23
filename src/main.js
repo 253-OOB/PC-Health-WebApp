@@ -20,9 +20,10 @@ const store = new Vuex.Store({
         organizations: null, //list of organizations
         organizationID: null, //organization select in dropdown
         LoggedInOrg: false, //keep you logged in settings for org
-        useDummyData: false,
         AccessToken: null,
         RefreshToken: null,
+        
+        useDummyData: false,
     },
     getters: {
         //might be able to use filters https://blog.pusher.com/getting-started-vuex-state-management-vuejs/
@@ -31,6 +32,9 @@ const store = new Vuex.Store({
     mutations: {
         updateOrgID(state, organizationID) {
             Vue.set(state, "organizationID", organizationID);
+        },
+        updateTags(state, tags) {
+            Vue.set(state, "tags", tags);
         },
         updateAccTok(state, token) {
             Vue.set(state, "AccessToken", token);
@@ -43,8 +47,8 @@ const store = new Vuex.Store({
         fetchTokens() {
             const AccToken = getCookie("AccessToken");
             const RefToken = session.RefreshToken;
-            this.commit('updateAccTok', AccToken);
-            this.commit('updateRefTok', RefToken);
+            this.commit("updateAccTok", AccToken);
+            this.commit("updateRefTok", RefToken);
         },
     },
 });

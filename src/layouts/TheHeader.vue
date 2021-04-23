@@ -161,7 +161,7 @@ export default {
         // gets all the tags for the selected org and saves them in tagOptions
         async getTags(newVal) {
             this.$store.commit("updateOrgID", newVal);
-            this.$store.state.tags = [];
+            let tempTags = [];
             //Api Call
             const response = await fetch(
                 process.env.VUE_APP_API_GET_TAGS +
@@ -179,13 +179,13 @@ export default {
 
                     //Add all tags to tagOptions
                     tagJson["tags"].forEach((tag) => {
-                        this.$store.state.tags.push({
+                        tempTags.push({
                             OrganisationID: tag["OrganisationID"],
                             TagID: tag["TagID"],
                             TagName: tag["TagName"],
                         });
                     });
-
+                    this.$store.commit("updateTags", tempTags);
                     console.log("Fetched TAGS");
                 }
             } catch (err) {

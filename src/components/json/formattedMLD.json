@@ -6,7 +6,15 @@
         "Size1": "53107597312",
         "FreeSpace1": "6066872320",
         "CurrentLoadPercentage": "4",
-        "isOnline": true
+        "isOnline": true,
+        "tags": [
+            {
+                "TagID": 1
+            },
+            {
+                "TagID": 2
+            }
+        ]
     },
     {
         "AssignedName": "DESKTOP-2",
@@ -15,7 +23,12 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "4",
-        "isOnline": false
+        "isOnline": false,
+        "tags": [
+            {
+                "TagID": 1
+            }
+        ]
     },
     {
         "AssignedName": "DESKTOP-3",
@@ -24,7 +37,8 @@
         "Size1": "425424523",
         "FreeSpace1": "354378324",
         "CurrentLoadPercentage": "2",
-        "isOnline": true
+        "isOnline": true,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-4",
@@ -33,7 +47,8 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "1",
-        "isOnline": false
+        "isOnline": false,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-5",
@@ -42,7 +57,8 @@
         "Size1": "53107597312",
         "FreeSpace1": "6066872320",
         "CurrentLoadPercentage": "4",
-        "isOnline": true
+        "isOnline": true,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-6",
@@ -51,7 +67,8 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "4",
-        "isOnline": false
+        "isOnline": false,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-7",
@@ -60,7 +77,8 @@
         "Size1": "425424523",
         "FreeSpace1": "354378324",
         "CurrentLoadPercentage": "2",
-        "isOnline": true
+        "isOnline": true,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-8",
@@ -69,7 +87,8 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "1",
-        "isOnline": false
+        "isOnline": false,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-9",
@@ -78,7 +97,8 @@
         "Size1": "53107597312",
         "FreeSpace1": "6066872320",
         "CurrentLoadPercentage": "4",
-        "isOnline": true
+        "isOnline": true,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-10",
@@ -87,7 +107,12 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "4",
-        "isOnline": false
+        "isOnline": false,
+        "tags": [
+            {
+                "TagID": 2
+            }
+        ]
     },
     {
         "AssignedName": "DESKTOP-11",
@@ -96,7 +121,8 @@
         "Size1": "425424523",
         "FreeSpace1": "354378324",
         "CurrentLoadPercentage": "2",
-        "isOnline": false
+        "isOnline": false,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-12",
@@ -105,7 +131,8 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "1",
-        "isOnline": false
+        "isOnline": false,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-13",
@@ -114,7 +141,8 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "1",
-        "isOnline": false
+        "isOnline": false,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-14",
@@ -123,7 +151,8 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "1",
-        "isOnline": false
+        "isOnline": false,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-15",
@@ -132,7 +161,8 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "1",
-        "isOnline": true
+        "isOnline": true,
+        "tags": []
     },
     {
         "AssignedName": "DESKTOP-16",
@@ -141,6 +171,11 @@
         "Size1": "19596412",
         "FreeSpace1": "4556489446",
         "CurrentLoadPercentage": "1",
-        "isOnline": false
+        "isOnline": false,
+        "tags": [
+            {
+                "TagID": 2
+            }
+        ]
     }
 ]
