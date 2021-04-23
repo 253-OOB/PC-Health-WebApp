@@ -148,7 +148,7 @@ export default {
                             value: org.OrganisationID,
                             text: org.OrganisationName,
                         });
-                        if (this.$store.state.organizationsID === null)
+                        if (this.$store.state.organizationID === null)
                             this.orgSelected = org.OrganisationID;
                     });
                 } catch (err) {
@@ -165,7 +165,7 @@ export default {
             //Api Call
             const response = await fetch(
                 process.env.VUE_APP_API_GET_TAGS +
-                    this.$store.state.organizationsID,
+                    this.$store.state.organizationID,
                 {
                     method: "GET",
                 }

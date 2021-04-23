@@ -53,16 +53,22 @@ export default {
         },
     },
     created() {
-        this.unsubscribe = this.$store.subscribe((mutation, state) => {
-            if (mutation.type === "updateOrgID") {
-                this.selectedOrg = state.organizationsID;
-                if (this.$store.state.useDummyData) {
-                    this.JSONcomponentLists = FleafDataJ;
-                } else {
-                    this.getLeafs(this.selectedOrg);
+        if (this.$store.state.organizationID === null) {
+            //track if organization selected is changed and display other leafs
+            this.unsubscribe = this.$store.subscribe((mutation, state) => {
+                if (mutation.type === "updateOrgID") {
+                    this.selectedOrg = state.organizationID;
+                    if (this.$store.state.useDummyData) {
+                        this.JSONcomponentLists = FleafDataJ;
+                    } else {
+                        this.getLeafs(this.selectedOrg);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            //The leaf has already been loaded in the session
+            this.getLeafs(this.$store.state.organizationID);
+        }
     },
     beforeDestroy() {
         this.unsubscribe();

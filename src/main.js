@@ -15,10 +15,10 @@ Vue.use(Vuex);
 // https://vuex.vuejs.org/guide/#the-simplest-store
 const store = new Vuex.Store({
     state: {
-        tags: null, //list of tags per organizationsID
+        tags: null, //list of tags per organizationID
         tagSelected: null, //tag selected in dropdown
         organizations: null, //list of organizations
-        organizationsID: null, //organization select in dropdown
+        organizationID: null, //organization select in dropdown
         LoggedInOrg: false, //keep you logged in settings for org
         useDummyData: false,
         AccessToken: null,
@@ -26,11 +26,11 @@ const store = new Vuex.Store({
     },
     getters: {
         //might be able to use filters https://blog.pusher.com/getting-started-vuex-state-management-vuejs/
-        organizationsID: (state) => state.organizationsID,
+        organizationID: (state) => state.organizationID,
     },
     mutations: {
-        updateOrgID(state, organizationsID) {
-            Vue.set(state, "organizationsID", organizationsID);
+        updateOrgID(state, organizationID) {
+            Vue.set(state, "organizationID", organizationID);
         },
         updateAccTok(state, token) {
             Vue.set(state, "AccessToken", token);
