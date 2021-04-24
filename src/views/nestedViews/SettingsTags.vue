@@ -88,7 +88,8 @@ export default {
                         return;
                     }
                     //if form is valid:
-                    this.getTags(); //add new tag to the rest
+                    this.$getTags(); //add new tag to the rest
+                    //TODO call global get tags
                     //tag was added succesfully
                     this.createTagName = "";
                     this.createState = true;
@@ -102,39 +103,6 @@ export default {
         deleteTag() {
             if (this.deleteTagName === null) {
                 return;
-            }
-        },
-
-        async getTags() {
-            let tempTags = [];
-            //Api Call
-            const response = await fetch(
-                process.env.VUE_APP_API_GET_TAGS +
-                    this.$store.state.organizationID,
-                {
-                    method: "GET",
-                }
-            );
-
-            try {
-                if (!response.ok) {
-                    throw new Error("Invalid Organization Selected");
-                } else {
-                    const tagJson = await response.json();
-
-                    //Add all tags to tagOptions
-                    tagJson["tags"].forEach((tag) => {
-                        tempTags.push({
-                            OrganisationID: tag["OrganisationID"],
-                            TagID: tag["TagID"],
-                            TagName: tag["TagName"],
-                        });
-                    });
-                    this.$store.commit("updateTags", tempTags);
-                    console.log("Updated TAGS to include new tag");
-                }
-            } catch (err) {
-                console.error("Error fetching TAGS:\n" + err);
             }
         },
     },

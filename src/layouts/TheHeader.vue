@@ -84,7 +84,10 @@ export default {
     watch: {
         //Set selected org as global organizationID
         orgSelected(newVal) {
-            this.getTags(newVal);
+            this.$store.commit("updateOrgID", newVal);
+            // Called when an organisation is selected
+            // gets all the tags for the selected org and saves them in tagOptions
+            this.$getTags();
         },
     },
 
@@ -154,42 +157,6 @@ export default {
                 } catch (err) {
                     console.error("Error fetching ORGANIZATIONS:\n" + err);
                 }
-            }
-        },
-
-        // Called when an organisation is selected
-        // gets all the tags for the selected org and saves them in tagOptions
-        async getTags(newVal) {
-            this.$store.commit("updateOrgID", newVal);
-            let tempTags = [];
-            //Api Call
-            const response = await fetch(
-                process.env.VUE_APP_API_GET_TAGS +
-                    this.$store.state.organizationID,
-                {
-                    method: "GET",
-                }
-            );
-
-            try {
-                if (!response.ok) {
-                    throw new Error("Invalid Organization Selected");
-                } else {
-                    const tagJson = await response.json();
-
-                    //Add all tags to tagOptions
-                    tagJson["tags"].forEach((tag) => {
-                        tempTags.push({
-                            OrganisationID: tag["OrganisationID"],
-                            TagID: tag["TagID"],
-                            TagName: tag["TagName"],
-                        });
-                    });
-                    this.$store.commit("updateTags", tempTags);
-                    console.log("Fetched TAGS");
-                }
-            } catch (err) {
-                console.error("Error fetching TAGS:\n" + err);
             }
         },
     },

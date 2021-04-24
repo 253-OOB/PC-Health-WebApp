@@ -80,7 +80,7 @@ export default {
 #overview {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-template-rows: repeat(auto-fill, 100px);
+    grid-template-rows: repeat(auto-fill, minmax(100px,));
     justify-items: center;
     align-items: center;
     overflow-y: scroll;

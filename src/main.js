@@ -45,7 +45,7 @@ const store = new Vuex.Store({
         },
         updateOrgToken(state, token) {
             Vue.set(state, "organizationToken", token);
-        }
+        },
     },
     actions: {
         fetchTokens() {
@@ -129,10 +129,69 @@ function getCookie(cname) {
     return "";
 }
 
+const getTags = () => {
+    console.log("You just called a global variable!");
+
+    let tempTags = [];
+    //Api Call
+    fetch(process.env.VUE_APP_API_GET_TAGS + store.state.organizationID, {
+        method: "GET",
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Invalid Organization Selected");
+            }
+            return response.json();
+        })
+        .then((tagJson) => {
+            //Add all tags to tagOptions
+            tagJson["tags"].forEach((tag) => {
+                tempTags.push({
+                    OrganisationID: tag["OrganisationID"],
+                    TagID: tag["TagID"],
+                    TagName: tag["TagName"],
+                });
+            });
+            store.commit("updateTags", tempTags);
+            console.log("Fetched TAGS");
+        })
+        .catch((err) => {
+            console.error("Error fetching TAGS:\n" + err);
+        });
+
+    // const response = fetch(
+    //     process.env.VUE_APP_API_GET_TAGS + this.$store.state.organizationID,
+    //     {
+    //         method: "GET",
+    //     }
+    // );
+
+    // try {
+    //     if (!response.ok) {
+    //         throw new Error("Invalid Organization Selected");
+    //     } else {
+    //         const tagJson = response.json();
+
+    //         //Add all tags to tagOptions
+    //         tagJson["tags"].forEach((tag) => {
+    //             tempTags.push({
+    //                 OrganisationID: tag["OrganisationID"],
+    //                 TagID: tag["TagID"],
+    //                 TagName: tag["TagName"],
+    //             });
+    //         });
+    //         this.$store.commit("updateTags", tempTags);
+    //         console.log("Fetched TAGS");
+    //     }
+    // } catch (err) {
+    //     console.error("Error fetching TAGS:\n" + err);
+    // }
+};
+
 async function launchVueApp() {
     Vue.prototype.$session = session;
-    // Vue.prototype.$organizationID = null;
     Vue.prototype.$tags = null;
+    Vue.prototype.$getTags = getTags;
 
     // Loads in vue app
     new Vue({

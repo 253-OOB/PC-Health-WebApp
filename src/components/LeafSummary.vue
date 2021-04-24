@@ -135,7 +135,7 @@
                     v-for="(tag, index) in this.$store.state.tags"
                     :key="index"
                     href="#"
-                    @click.prevent="onTagClick(tag['TagID'])"
+                    @click.prevent="onTagClick(tag)"
                 >
                     {{ tag["TagName"] }}</a
                 >
@@ -297,7 +297,7 @@ export default {
             const AccToken = this.$store.state.AccessToken;
             const RefToken = this.$store.state.RefreshToken;
             const leafID = this.metrics["LeafID"];
-            const tagID = tag;
+            const tagID = tag["TagID"];
             fetch(
                 process.env.VUE_APP_API_ASSIGN_TAG +
                     "LeafID=" +
@@ -311,8 +311,17 @@ export default {
                         RefreshToken: RefToken,
                     }),
                 }
-            );
-            alert(`You clicked ${tag}!`);
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+                    this.$getTags();
+                    this.$forceUpdate();
+                })
+                .catch(() => {
+                    alert(`Tag ${tag["TagName"]} is already assigned!`);
+                });
         },
         checkIfTagsExist() {
             try {
@@ -335,14 +344,17 @@ export default {
         // ---- //
         getAssignedTagNames() {
             try {
-                const tagNames = [];
-                const allTags = this.$store.state.tags;
-                this.metrics.tags.forEach((tag) => {
-                    if (tag["TagID"] == allTags[tag["TagID"] - 1]["TagID"]) {
-                        tagNames.push(allTags[tag["TagID"] - 1]["TagName"]);
-                    }
+                const tagsToBeDisplayed = [];
+                const allTags = this.$store.state.tags; //tags for the org
+                this.metrics.tags.forEach((leafTag) => {
+                    allTags.forEach((orgTag) => {
+                        if (leafTag["TagID"] == orgTag["TagID"]) {
+                            tagsToBeDisplayed.push(orgTag["TagName"]);
+                        }
+                    });
                 });
-                this.assignedTagNames = tagNames;
+                tagsToBeDisplayed.sort();
+                this.assignedTagNames = tagsToBeDisplayed;
             } catch (err) {
                 return;
             }
@@ -352,6 +364,7 @@ export default {
         //track if tags update so we can redisplay other leafs
         this.unsubscribe = this.$store.subscribe((mutation) => {
             if (mutation.type === "updateTags") {
+                console.log("New tag added detected");
                 this.getAssignedTagNames();
             }
         });
@@ -369,13 +382,17 @@ export default {
 <style scoped>
 .LeafSummary {
     border: solid 2px #ced2d8;
-    width: 150px;
-    height: 70%;
+    width: fit-content;
     text-align: start;
     margin: 30px;
     border-radius: 5px;
     box-shadow: 3px 5px 15px black;
     background-color: white;
+}
+
+#leaf-wrapper {
+    width: 100%;
+    height: 100%;
 }
 
 #title {
@@ -387,6 +404,7 @@ export default {
 
 .leaf-tags-grp {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
 }
