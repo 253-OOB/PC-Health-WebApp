@@ -89,7 +89,6 @@ export default {
                     }
                     //if form is valid:
                     this.$getTags(); //add new tag to the rest
-                    //TODO call global get tags
                     //tag was added succesfully
                     this.createTagName = "";
                     this.createState = true;

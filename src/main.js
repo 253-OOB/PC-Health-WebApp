@@ -158,34 +158,6 @@ const getTags = () => {
         .catch((err) => {
             console.error("Error fetching TAGS:\n" + err);
         });
-
-    // const response = fetch(
-    //     process.env.VUE_APP_API_GET_TAGS + this.$store.state.organizationID,
-    //     {
-    //         method: "GET",
-    //     }
-    // );
-
-    // try {
-    //     if (!response.ok) {
-    //         throw new Error("Invalid Organization Selected");
-    //     } else {
-    //         const tagJson = response.json();
-
-    //         //Add all tags to tagOptions
-    //         tagJson["tags"].forEach((tag) => {
-    //             tempTags.push({
-    //                 OrganisationID: tag["OrganisationID"],
-    //                 TagID: tag["TagID"],
-    //                 TagName: tag["TagName"],
-    //             });
-    //         });
-    //         this.$store.commit("updateTags", tempTags);
-    //         console.log("Fetched TAGS");
-    //     }
-    // } catch (err) {
-    //     console.error("Error fetching TAGS:\n" + err);
-    // }
 };
 
 async function launchVueApp() {
