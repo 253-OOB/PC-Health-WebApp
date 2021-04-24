@@ -37,7 +37,6 @@
                     label="Title"
                     label-for="title-input"
                     invalid-feedback="Title is required"
-                    :state="titleState"
                 >
                     <b-form-input
                         ref="notifTitle"
@@ -53,7 +52,6 @@
                     label="Content"
                     label-for="content-input"
                     invalid-feedback="Content is required"
-                    :state="contentState"
                 >
                     <b-form-input
                         ref="notifContent"
@@ -66,49 +64,61 @@
                 </b-form-group>
 
                 <!-- Dropdowns -->
-                <div
-                    class="flex-aligned"
-                    style="justify-content: space-around"
-                    invalid-feedback="Value is required"
-                    :state="valueState"
-                >
+                <div class="flex-aligned" style="justify-content: space-around">
                     <!-- Metric -->
-                    <b-form-select
-                        id="metric"
-                        class="modal-dropdown"
-                        v-model="metricSelected"
-                        :options="metricOptions"
+                    <b-form-group
+                        id="metric-wrapper"
+                        invalid-feedback="Metric is required"
                     >
-                        <template #first>
-                            <b-form-select-option :value="null" disabled
-                                >-- Metric --</b-form-select-option
-                            >
-                        </template>
-                    </b-form-select>
+                        <b-form-select
+                            ref="notifMetric"
+                            v-model="notifMetric"
+                            :options="metricOptions"
+                            :state="metricState"
+                            required
+                        >
+                            <template #first>
+                                <b-form-select-option :value="null" disabled
+                                    >-- Metric --</b-form-select-option
+                                >
+                            </template>
+                        </b-form-select>
+                    </b-form-group>
+
                     <!-- Operator -->
-                    <b-form-select
-                        id="operator"
-                        class="modal-dropdown"
-                        v-model="operatorSelected"
-                        :options="operatorOptions"
+                    <b-form-group
+                        id="operator-wrapper"
+                        invalid-feedback="Operator is required"
                     >
-                        <template #first>
-                            <b-form-select-option :value="null" disabled
-                                >-- Operator --</b-form-select-option
-                            >
-                        </template>
-                    </b-form-select>
+                        <b-form-select
+                            ref="notifOperator"
+                            v-model="notifOperator"
+                            :options="operatorOptions"
+                            :state="operatorState"
+                            required
+                        >
+                            <template #first>
+                                <b-form-select-option :value="null" disabled
+                                    >-- Operator --</b-form-select-option
+                                >
+                            </template>
+                        </b-form-select>
+                    </b-form-group>
+
                     <!-- Value -->
-                    <b-form-input
-                        ref="value"
-                        id="value-input"
-                        class="modal-dropdown"
-                        v-model="valueSelected"
-                        :state="valueState"
-                        required
-                        placeholder="-- Value --"
+                    <b-form-group
+                        id="value-wrapper"
+                        invalid-feedback="Value is required"
                     >
-                    </b-form-input>
+                        <b-form-input
+                            ref="notifValue"
+                            v-model="notifValue"
+                            :state="valueState"
+                            required
+                            placeholder="-- Value --"
+                        >
+                        </b-form-input>
+                    </b-form-group>
                 </div>
                 <p v-if="invalidNotif" style="color: red; text-align: center">
                     Invalid Information Entered
@@ -157,23 +167,25 @@ export default {
             titleState: null,
             contentState: null,
             valueState: null,
+            metricState: null,
+            operatorState: null,
             // Modal content
             notifTitle: "",
             notifContent: "",
-            metricSelected: null,
+            notifMetric: null,
+            notifOperator: null,
+            notifValue: "",
             metricOptions: [
                 { value: 1, text: "Percent Processor Time (%)" },
                 { value: 2, text: "I/O Disk (B/s)" },
                 { value: 3, text: "Available Disk Space (GB)" },
                 { value: 3, text: "Available RAM (MB)" },
             ],
-            operatorSelected: null,
             operatorOptions: [
                 { value: 1, text: "=" },
                 { value: 2, text: ">" },
                 { value: 3, text: "<" },
             ],
-            valueSelected: null,
             invalidNotif: false,
 
             // ---- //
@@ -202,33 +214,42 @@ export default {
         resetModal() {
             // Modal is reset everytime it opens/closes
             (this.notifTitle = ""),
-                (this.titleState = null),
                 (this.notifContent = ""),
+                (this.notifMetric = null);
+            this.notifOperator = null;
+            this.notifValue = "";
+
+            (this.titleState = null),
                 (this.contentState = null),
-                (this.metricSelected = null);
-            this.operatorSelected = null;
-            this.valueSelected = null;
+                (this.metricState = null);
+            this.operatorState = null;
+            this.valueState = null;
         },
         handleOk(bvModalEvt) {
-            // OK -> check if valid ? submit : revert
-            // Prevent modal from closing
-            bvModalEvt.preventDefault();
-            // Trigger submit handler
+            bvModalEvt.preventDefault(); // Prevent modal from closing
             this.handleSubmit();
         },
         checkFormValidity() {
             //check if input is correct
-            const titleValid = this.$refs.notifTitle.checkValidity();
-            const contentValid = this.$refs.notifContent.checkValidity();
-            const valueValid = this.$refs.value.checkValidity();
-            return titleValid && contentValid && valueValid;
+            this.titleState = this.$refs.notifTitle.checkValidity();
+            this.contentState = this.$refs.notifContent.checkValidity();
+            this.metricState = this.notifMetric !== null;
+            this.operatorState = this.notifOperator !== null;
+            this.valueState = this.$refs.notifValue.checkValidity();
+            return (
+                this.titleState &&
+                this.contentState &&
+                this.metricState &&
+                this.operatorState &&
+                this.valueState
+            );
         },
         handleSubmit() {
-            // decides what to do if the data is valid or invalid
+            // Exit when the form isn't valid
             if (!this.checkFormValidity()) {
-                // Exit when the form isn't valid
                 return;
             }
+            // Submit post request if form is valid
             fetch(
                 process.env.VUE_APP_CREATE_NOTIF +
                     "LeafID=" +
@@ -239,12 +260,12 @@ export default {
                         AccessToken: this.$store.state.AccessToken,
                         RefreshToken: this.$store.state.RefreshToken,
                         notification: {
-                            "this.metricSelected": {
+                            "this.notifMetric": {
                                 Title: this.notifTitle,
                                 Content: this.notifContent,
                                 Comparison: {
-                                    operator: this.operatorSelected,
-                                    value: this.valueSelected,
+                                    operator: this.notifOperator,
+                                    value: this.notifValue,
                                 },
                             },
                         },
@@ -264,6 +285,7 @@ export default {
                     }
                 })
                 .catch((err) => {
+                    this.invalidNotif = true;
                     console.log("Error Creating Notification\n" + err);
                 });
         },
@@ -377,16 +399,13 @@ export default {
 }
 
 /* inside modal */
-.modal-dropdown {
-    text-align: center;
+#metric-wrapper {
+    width: 45%;
 }
-#metric {
-    width: 50%;
+#operator-wrapper {
+    width: 25%;
 }
-#operator {
-    width: 20%;
-}
-#value-input {
+#value-wrapper {
     width: 20%;
 }
 </style>
