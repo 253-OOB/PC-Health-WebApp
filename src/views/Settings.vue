@@ -159,10 +159,17 @@ export default {
                         this.$nextTick(() => {
                             this.$refs["orgLogin"].hide();
                         });
-
                         //redirect to tag page
                         this.$router.push("/settings/tags");
+                        // get org token
+                        return response.json();
                     }
+                })
+                .then((orgToken) => {
+                    this.$store.commit(
+                        "updateOrgToken",
+                        orgToken["OrganisationToken"]
+                    );
                 })
                 .catch((err) => {
                     console.log("Unexpected Error!\n" + err);
@@ -175,10 +182,7 @@ export default {
         activetab(newValue) {
             if (newValue === 2 && !this.$store.state.LoggedInOrg) {
                 this.$refs["orgLogin"].show();
-            } else if (
-                newValue === 2 &&
-                this.$store.state.LoggedInOrg
-            ) {
+            } else if (newValue === 2 && this.$store.state.LoggedInOrg) {
                 //case where user has logged in before in the session
                 this.$router.push("/settings/tags");
             }

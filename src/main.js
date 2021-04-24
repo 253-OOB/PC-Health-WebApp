@@ -19,10 +19,11 @@ const store = new Vuex.Store({
         tagSelected: null, //tag selected in dropdown
         organizations: null, //list of organizations
         organizationID: null, //organization select in dropdown
+        organizationToken: null, //when logged in as an org to edit tags
         LoggedInOrg: false, //keep you logged in settings for org
         AccessToken: null,
         RefreshToken: null,
-        
+
         useDummyData: false,
     },
     getters: {
@@ -42,6 +43,9 @@ const store = new Vuex.Store({
         updateRefTok(state, token) {
             Vue.set(state, "RefreshToken", token);
         },
+        updateOrgToken(state, token) {
+            Vue.set(state, "organizationToken", token);
+        }
     },
     actions: {
         fetchTokens() {
