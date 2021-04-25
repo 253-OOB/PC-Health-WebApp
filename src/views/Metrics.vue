@@ -13,7 +13,7 @@
                 :options="tagOptions"
             >
                 <template #first>
-                    <b-form-select-option :value="null" disabled
+                    <b-form-select-option :value="null"
                         >-- Select Tag --</b-form-select-option
                     >
                 </template>
@@ -59,11 +59,13 @@
             </router-link>
         </div>
 
+        <!--             -->
         <!-- Tab Content -->
+        <!--             -->
         <div class="content-group">
             <div v-if="activetab === 1" class="tabcontent">
                 <!-- overview -->
-                <router-view class="sub-content" />
+                <router-view :keyword="this.keyword" class="sub-content" />
             </div>
             <div v-if="activetab === 2" class="tabcontent">
                 <!-- details -->
@@ -125,7 +127,7 @@ export default {
 
         //When a tag is selected in the dropdown
         tagSelected(newValue) {
-            this.$store.state.tagSelected = newValue;
+            this.$store.commit("updateSelectedTag", newValue);
         },
     },
 };

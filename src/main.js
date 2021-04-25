@@ -34,6 +34,9 @@ const store = new Vuex.Store({
         updateOrgID(state, organizationID) {
             Vue.set(state, "organizationID", organizationID);
         },
+        updateSelectedTag(state, tag) {
+            Vue.set(state, "tagSelected", tag);
+        },
         updateTags(state, tags) {
             Vue.set(state, "tags", tags);
         },
@@ -130,8 +133,6 @@ function getCookie(cname) {
 }
 
 const getTags = () => {
-    console.log("You just called a global variable!");
-
     let tempTags = [];
     //Api Call
     fetch(process.env.VUE_APP_API_GET_TAGS + store.state.organizationID, {
