@@ -176,15 +176,15 @@ export default {
             notifOperator: null,
             notifValue: "",
             metricOptions: [
-                { value: 1, text: "Percent Processor Time (%)" },
-                { value: 2, text: "I/O Disk (B/s)" },
-                { value: 3, text: "Available Disk Space (GB)" },
-                { value: 3, text: "Available RAM (MB)" },
+                { value: "PercentProcessorTime", text: "Percent Processor Time (%)" },
+                { value: "DiskBytesPersec", text: "I/O Disk (B/s)" },
+                { value: "PercentFreeSpace", text: "Available Disk Space (GB)" },
+                { value: "AvailableMBytes", text: "Available RAM (MB)" },
             ],
             operatorOptions: [
-                { value: 1, text: "=" },
-                { value: 2, text: ">" },
-                { value: 3, text: "<" },
+                { value: "=", text: "=" },
+                { value: ">", text: ">" },
+                { value: "<", text: "<" },
             ],
             invalidNotif: false,
 
@@ -249,6 +249,19 @@ export default {
             if (!this.checkFormValidity()) {
                 return;
             }
+
+            let X = `{"${this.notifMetric}": null}`;
+            X = JSON.parse(X);
+            X[this.notifMetric] = {
+                Title: this.notifTitle,
+                Content: this.notifContent,
+                Comparison: {
+                    operator: this.notifOperator,
+                    value: parseInt(this.notifValue),
+                },
+            };
+    
+
             // Submit post request if form is valid
             fetch(
                 process.env.VUE_APP_CREATE_NOTIF +
@@ -259,16 +272,7 @@ export default {
                     body: JSON.stringify({
                         AccessToken: this.$store.state.AccessToken,
                         RefreshToken: this.$store.state.RefreshToken,
-                        notification: {
-                            "this.notifMetric": {
-                                Title: this.notifTitle,
-                                Content: this.notifContent,
-                                Comparison: {
-                                    operator: this.notifOperator,
-                                    value: this.notifValue,
-                                },
-                            },
-                        },
+                        notification: X,
                     }),
                 }
             )
