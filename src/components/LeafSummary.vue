@@ -286,7 +286,7 @@ export default {
                 })
                 .catch((err) => {
                     this.invalidNotif = true;
-                    console.log("Error Creating Notification\n" + err);
+                    console.error("Error Creating Notification\n" + err);
                 });
         },
 
@@ -316,8 +316,9 @@ export default {
                     if (!response.ok) {
                         throw new Error();
                     }
-                    this.$getTags();
-                    this.$forceUpdate();
+                    this.$getTags(); //will get new tags and update global variable which gets detected by subscribed method
+                    console.log("after fetched tags");
+                    this.getAssignedTagNames();
                 })
                 .catch(() => {
                     alert(`Tag ${tag["TagName"]} is already assigned!`);
@@ -353,24 +354,23 @@ export default {
                         }
                     });
                 });
-                tagsToBeDisplayed.sort();
-                this.assignedTagNames = tagsToBeDisplayed;
+                this.assignedTagNames = tagsToBeDisplayed.sort();
             } catch (err) {
-                return;
+                console.error(err);
             }
         },
     },
     created() {
         //track if tags update so we can redisplay other leafs
-        this.unsubscribe = this.$store.subscribe((mutation) => {
-            if (mutation.type === "updateTags") {
-                console.log("New tag added detected");
-                this.getAssignedTagNames();
-            }
-        });
+        // this.unsubscribe = this.$store.subscribe((mutation) => {
+        //     if (mutation.type === "updateTags") {
+        //         console.log("Mutation detected!!!!!!!!!!!!!!!!!!!!!!")
+        //         this.getAssignedTagNames();
+        //     }
+        // });
     },
     beforeDestroy() {
-        this.unsubscribe();
+        // this.unsubscribe();
     },
     mounted() {
         this.checkOffline(this.index);
@@ -399,7 +399,6 @@ export default {
     color: white;
     font-size: 17px;
     font-weight: bold;
-    height: 30%;
 }
 
 .leaf-tags-grp {
@@ -407,13 +406,14 @@ export default {
     flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
+    height: 250px;
+    overflow-y: scroll;
 }
 .leaf-tag {
     border: solid 2px var(--spacer-color);
     border-radius: 10px;
     padding: 2px;
     margin: 10px 2px 0 0;
-    height: 70%;
 }
 
 /* inside modal */

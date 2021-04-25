@@ -3,9 +3,10 @@
         <!--       -->
         <!-- Tools -->
         <!--       -->
-        <b-input-group size="lg">
+        <b-input-group style="display: flex" size="lg">
             <!-- Dropdown Select -->
             <b-form-select
+                style="max-width: 300px; width: 20%"
                 class="dropdowns"
                 id="tags"
                 v-on:click.native="checkForNewTags"
@@ -20,16 +21,27 @@
             </b-form-select>
             <!-- Searchbar -->
             <b-form-input
+                style="flex: 1"
                 v-model="keyword"
                 placeholder="Type to Search..."
                 type="text"
             ></b-form-input>
+            <!-- Search Button -->
+            <b-input-group-append>
+                <b-button
+                    style="border-right: 2px solid white"
+                    :disabled="!keyword"
+                    @click="searchLeafs(keyword)"
+                >
+                    Search
+                </b-button>
+            </b-input-group-append>
             <!-- Clear Button -->
             <b-input-group-append>
                 <b-button
                     id="clear-btn"
                     :disabled="!keyword"
-                    @click="keyword = ''"
+                    @click="(keyword = ''), searchLeafs(keyword)"
                 >
                     Clear
                 </b-button>
@@ -96,6 +108,10 @@ export default {
         checkForNewTags() {
             this.tagTriggered = !this.tagTriggered;
         },
+
+        searchLeafs(keyword) {
+            this.$store.commit("updateSearchWord", keyword);
+        },
     },
 
     watch: {
@@ -137,10 +153,5 @@ export default {
 .metrics {
     position: relative;
     top: -2%;
-}
-
-.tools {
-    display: flex;
-    background-color: var(--background-color);
 }
 </style>

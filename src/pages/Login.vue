@@ -71,7 +71,7 @@ export default {
                 })
                 .catch((err) => {
                     // Handle the cases for errors.
-                    console.log(err);
+                    console.error(err);
                     this.showMsg();
                 });
         },

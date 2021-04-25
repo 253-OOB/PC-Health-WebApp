@@ -15,6 +15,7 @@ Vue.use(Vuex);
 // https://vuex.vuejs.org/guide/#the-simplest-store
 const store = new Vuex.Store({
     state: {
+        searchWord: "", //keyword for search bar to filter leafs in overview
         tags: null, //list of tags per organizationID
         tagSelected: null, //tag selected in dropdown
         organizations: null, //list of organizations
@@ -31,23 +32,26 @@ const store = new Vuex.Store({
         organizationID: (state) => state.organizationID,
     },
     mutations: {
-        updateOrgID(state, organizationID) {
-            Vue.set(state, "organizationID", organizationID);
+        updateSearchWord(state, keyword) {
+            Vue.set(state, "searchWord", keyword);
+        },
+        updateTags(state, tags) {
+            Vue.set(state, "tags", tags);
         },
         updateSelectedTag(state, tag) {
             Vue.set(state, "tagSelected", tag);
         },
-        updateTags(state, tags) {
-            Vue.set(state, "tags", tags);
+        updateOrgID(state, organizationID) {
+            Vue.set(state, "organizationID", organizationID);
+        },
+        updateOrgToken(state, token) {
+            Vue.set(state, "organizationToken", token);
         },
         updateAccTok(state, token) {
             Vue.set(state, "AccessToken", token);
         },
         updateRefTok(state, token) {
             Vue.set(state, "RefreshToken", token);
-        },
-        updateOrgToken(state, token) {
-            Vue.set(state, "organizationToken", token);
         },
     },
     actions: {

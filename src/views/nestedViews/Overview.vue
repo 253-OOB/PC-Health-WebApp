@@ -1,5 +1,11 @@
 <template>
     <div id="overview">
+        <b-spinner
+            v-if="loading"
+            class="loading"
+            label="Loading..."
+            variant="light"
+        ></b-spinner>
         <component
             v-for="(component, index) in LeafComponent"
             v-bind:index="index"
@@ -25,6 +31,7 @@ export default {
         return {
             componentName: LeafSummary,
             LeafComponent: [],
+            loading: true,
         };
     },
     components: {
@@ -45,6 +52,10 @@ export default {
             // it will throw an error which will be caught in the catch clause.
             // the subscribe in the catch (which watches the orgID change) will rerender the leafs
             try {
+                if (this.$store.state.organizationID === null) {
+                    throw new Error("Not loaded yet");
+                }
+
                 this.LeafComponent = await this.getLeafs(
                     this.$store.state.organizationID
                 );
@@ -52,28 +63,31 @@ export default {
                 // Triggered at initial call and org change
                 this.unsubscribe = this.$store.subscribe(
                     async (mutation, state) => {
+                        this.loading = true;
                         if (
                             mutation.type === "updateOrgID" ||
-                            mutation.type === "updateSelectedTag"
+                            mutation.type === "updateSelectedTag" ||
+                            mutation.type === "updateSearchWord"
                         ) {
                             const leafList = await this.getLeafs(
                                 state.organizationID
                             );
                             const nameFilter = this.keyword;
                             const tagFilter = state.tagSelected;
-                            console.log(nameFilter + " | " + tagFilter);
+                            let filteredList = leafList;
 
-                            if (tagFilter === null && nameFilter !== "") {
-                                //filter by name only
-                                this.LeafComponent = leafList.filter(
-                                    (leaf) => leaf.AssignedName === nameFilter
+                            //filter by name
+                            if (nameFilter !== "") {
+                                filteredList = filteredList.filter((leaf) =>
+                                    leaf.AssignedName.toLowerCase().includes(
+                                        nameFilter.toLowerCase()
+                                    )
                                 );
-                            } else if (
-                                tagFilter !== null &&
-                                nameFilter === ""
-                            ) {
-                                //filter by tag only
-                                this.LeafComponent = leafList.filter((leaf) => {
+                            }
+
+                            //filter by tag
+                            if (tagFilter !== null) {
+                                filteredList = filteredList.filter((leaf) => {
                                     let flag = false;
                                     leaf["tags"].forEach((tag) => {
                                         if (tag["TagID"] === tagFilter) {
@@ -82,24 +96,15 @@ export default {
                                     });
                                     return flag;
                                 });
-                            } else if (
-                                tagFilter !== null &&
-                                nameFilter !== ""
-                            ) {
-                                //filter by tag and name
-                                this.LeafComponent = leafList.filter(
-                                    (leaf) =>
-                                        leaf.AssignedName === nameFilter &&
-                                        leaf.tags.contains(nameFilter)
-                                );
-                            } else {
-                                //no filter
-                                this.LeafComponent = leafList;
                             }
+
+                            this.LeafComponent = filteredList;
+                            this.loading = false;
                         }
                     }
                 );
             }
+            this.loading = false;
         },
 
         async getLeafs(orgID) {
@@ -125,6 +130,7 @@ export default {
         },
     },
     mounted() {
+        this.loading = true;
         this.getFilteredLeaves();
     },
     beforeDestroy() {
@@ -137,24 +143,15 @@ export default {
 #overview {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-template-rows: repeat(auto-fill, minmax(100px));
+    grid-template-rows: repeat(auto-fill, 1fr);
     justify-items: center;
     align-items: center;
     overflow-y: scroll;
 }
-::-webkit-scrollbar {
-    width: 20px;
-}
-::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-::-webkit-scrollbar-thumb {
-    background-color: rgb(212, 212, 212);
-    border-radius: 20px;
-    border: 6px solid transparent;
-    background-clip: content-box;
-}
-::-webkit-scrollbar-thumb:hover {
-    background-color: grey;
+
+.loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
 }
 </style>

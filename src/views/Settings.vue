@@ -172,7 +172,7 @@ export default {
                     );
                 })
                 .catch((err) => {
-                    console.log("Unexpected Error!\n" + err);
+                    console.error("Unexpected Error!\n" + err);
                 });
         },
     },

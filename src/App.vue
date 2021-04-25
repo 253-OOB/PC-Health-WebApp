@@ -41,7 +41,6 @@ export default {
     justify-content: center;
 }
 
-
 /********************************/
 /********************************/
 /*       Styling for tabs       */
@@ -99,5 +98,21 @@ export default {
     width: 100%;
     background-color: var(--background-color);
     overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgb(212, 212, 212);
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: grey;
 }
 </style>
