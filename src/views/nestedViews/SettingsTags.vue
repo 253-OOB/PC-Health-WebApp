@@ -1,5 +1,11 @@
 <template>
     <div class="SettingsTags">
+        <b-spinner
+            v-if="loading"
+            class="loading"
+            label="Loading..."
+        ></b-spinner>
+
         <div class="form">
             <h3>Create a Tag</h3>
             <b-form-group
@@ -44,7 +50,9 @@
                     </template>
                 </b-form-select>
             </b-form-group>
-            <button v-on:click="deleteTag">Delete Tag</button>
+            <button v-on:click="deleteTag" :disabled="this.isTagsEmpty">
+                Delete Tag
+            </button>
         </div>
     </div>
 </template>
@@ -59,11 +67,47 @@ export default {
             createInvalidMsg: "",
             deleteTagOptions: [],
             createState: null,
+            existingTags: [],
+            loading: false,
         };
     },
 
+    computed: {
+        isTagsEmpty() {
+            if (typeof this.existingTags === "undefined") {
+                return true;
+            }
+            return this.existingTags.length === 0;
+        },
+    },
+
+    mounted() {
+        this.updateTags();
+    },
+
     methods: {
+        async updateTags() {
+            try {
+                const response = await this.$getTags();
+                if (typeof response === "undefined") {
+                    throw new Error("No Tags Available");
+                }
+                this.existingTags = response;
+            } catch (err) {
+                //no tags found
+                console.error(err);
+                this.existingTags = [];
+                return;
+            }
+
+            this.deleteTagOptions = this.existingTags.map(
+                (tag) => tag["TagName"]
+            );
+            this.loading = false;
+        },
+
         createTag() {
+            this.loading = true;
             //reset form
 
             // validate form
@@ -88,7 +132,7 @@ export default {
                         return;
                     }
                     //if form is valid:
-                    this.$getTags(); //add new tag to the rest
+                    this.updateTags(); //add new tag to the rest
                     //tag was added succesfully
                     this.createTagName = "";
                     this.createState = true;
@@ -97,11 +141,44 @@ export default {
                     console.error("Error Creating Tag: " + err);
                     return;
                 });
+            this.createState = null;
         },
 
         deleteTag() {
+            this.loading = true;
             if (this.deleteTagName === null) {
                 return;
+            } else {
+                fetch(process.env.VUE_APP_API_REMOVE_TAG + this.deleteTagName, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        organisationToken: this.$store.state.organizationToken,
+                    }),
+                }).then((response) => {
+                    //delete failed
+                    if (!response.ok) {
+                        console.error(
+                            "Response Status: " +
+                                response.status +
+                                "\n Error: " +
+                                response.text()
+                        );
+                        alert(
+                            "Could not delete tag '" + this.deleteTagName + "'"
+                        );
+                    } else {
+                        //delete succeeded
+                        this.updateTags(); //remove tag from the rest
+                        this.loading = false;
+
+                        alert(
+                            "Tag " +
+                                this.deleteTagName +
+                                " was deleted successfully"
+                        );
+                        this.deleteTagName = null;
+                    }
+                });
             }
         },
     },
@@ -117,6 +194,12 @@ export default {
     flex-direction: column;
     justify-content: space-evenly;
     background-color: white;
+}
+
+.loading {
+    position: absolute;
+    top: 49%;
+    left: 49%;
 }
 
 #divider {

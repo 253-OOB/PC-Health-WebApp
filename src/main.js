@@ -136,33 +136,37 @@ function getCookie(cname) {
     return "";
 }
 
-const getTags = () => {
-    let tempTags = [];
-    //Api Call
-    fetch(process.env.VUE_APP_API_GET_TAGS + store.state.organizationID, {
-        method: "GET",
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Invalid Organization Selected");
+const getTags = async () => {
+    try {
+        //Api Call
+        const response = await fetch(
+            process.env.VUE_APP_API_GET_TAGS + store.state.organizationID,
+            {
+                method: "GET",
             }
-            return response.json();
-        })
-        .then((tagJson) => {
-            //Add all tags to tagOptions
-            tagJson["tags"].forEach((tag) => {
-                tempTags.push({
-                    OrganisationID: tag["OrganisationID"],
-                    TagID: tag["TagID"],
-                    TagName: tag["TagName"],
-                });
+        );
+
+        if (!response.ok) {
+            throw new Error("Invalid Organization Selected");
+        }
+
+        let tempTags = [];
+        const tagJson = await response.json();
+
+        //Add all tags to tagOptions
+        tagJson["tags"].forEach((tag) => {
+            tempTags.push({
+                OrganisationID: tag["OrganisationID"],
+                TagID: tag["TagID"],
+                TagName: tag["TagName"],
             });
-            store.commit("updateTags", tempTags);
-            console.log("Fetched TAGS");
-        })
-        .catch((err) => {
-            console.error("Error fetching TAGS:\n" + err);
         });
+        store.commit("updateTags", tempTags);
+        console.log("Fetched TAGS");
+        return tempTags;
+    } catch (err) {
+        console.error("Error fetching TAGS:\n" + err);
+    }
 };
 
 async function launchVueApp() {

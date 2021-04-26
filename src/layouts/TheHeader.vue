@@ -83,11 +83,11 @@ export default {
 
     watch: {
         //Set selected org as global organizationID
-        orgSelected(newVal) {
+        async orgSelected(newVal) {
             this.$store.commit("updateOrgID", newVal);
             // Called when an organisation is selected
             // gets all the tags for the selected org and saves them in tagOptions
-            this.$getTags();
+            await this.$getTags();
         },
     },
 

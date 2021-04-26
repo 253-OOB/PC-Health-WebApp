@@ -176,9 +176,15 @@ export default {
             notifOperator: null,
             notifValue: "",
             metricOptions: [
-                { value: "PercentProcessorTime", text: "Percent Processor Time (%)" },
+                {
+                    value: "PercentProcessorTime",
+                    text: "Percent Processor Time (%)",
+                },
                 { value: "DiskBytesPersec", text: "I/O Disk (B/s)" },
-                { value: "PercentFreeSpace", text: "Available Disk Space (GB)" },
+                {
+                    value: "PercentFreeSpace",
+                    text: "Available Disk Space (GB)",
+                },
                 { value: "AvailableMBytes", text: "Available RAM (MB)" },
             ],
             operatorOptions: [
@@ -260,7 +266,6 @@ export default {
                     value: parseInt(this.notifValue),
                 },
             };
-    
 
             // Submit post request if form is valid
             fetch(
@@ -361,6 +366,7 @@ export default {
                 this.assignedTagNames = tagsToBeDisplayed.sort();
             } catch (err) {
                 console.error(err);
+                this.$forceUpdate();
             }
         },
     },
@@ -410,7 +416,7 @@ export default {
     flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
-    height: 250px;
+    max-height: 250px;
     overflow-y: scroll;
 }
 .leaf-tag {
