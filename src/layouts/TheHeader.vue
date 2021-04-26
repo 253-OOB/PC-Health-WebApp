@@ -193,6 +193,8 @@ export default {
 }
 .navbar-item:hover {
     cursor: pointer;
+    background-color: var(--font-color);
+    background-color: var(--spacer-color);
 }
 
 .icons {
