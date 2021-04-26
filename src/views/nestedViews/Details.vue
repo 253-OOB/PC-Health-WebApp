@@ -4,11 +4,11 @@
             fixed
             striped
             hover
-            :items="leafData"
-            :fields="fields"
+            :items="realData"
             :filter="keyword"
             :per-page="perPage"
             :current-page="currentPage"
+            :busy="isBusy"
         >
         </b-table>
 
@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import FleafDataJ from "@/components/json/formattedMLD.json";
-
 export default {
     name: "Details",
 
@@ -37,46 +35,92 @@ export default {
             // used for pagination
             perPage: 8,
             currentPage: 1,
-            fields: [
-                {
-                    label: "Names",
-                    key: "AssignedName",
-                    sortable: true,
-                },
-                {
-                    label: "RAM",
-                    key: "RAM",
-                    sortable: true,
-                },
-                {
-                    label: "Drive",
-                    key: "Name1",
-                    sortable: true,
-                },
-                {
-                    label: "Total Size",
-                    key: "Size1",
-                    sortable: true,
-                },
-                {
-                    label: "Free Space",
-                    key: "FreeSpace1",
-                    sortable: true,
-                },
-                {
-                    label: "Load%",
-                    key: "CurrentLoadPercentage",
-                    sortable: true,
-                },
-            ],
-            leafData: FleafDataJ,
+            realData: [],
+            isBusy: true,
         };
     },
 
     computed: {
         rows() {
-            return this.leafData.length;
+            return this.realData.length;
         },
+    },
+
+    methods: {
+        async getMetrics() {
+            const orgID = this.$store.state.organizationID;
+            const page = this.currentPage - 1;
+            const perpage = this.perPage;
+            const AccToken = this.$store.state.AccessToken;
+            const RefToken = this.$store.state.RefreshToken;
+
+            try {
+                const response = await fetch(
+                    process.env.VUE_APP_API_GET_METRICS +
+                        "OrganisationID=" +
+                        orgID +
+                        "&Page=" +
+                        page +
+                        "&Amount=" +
+                        perpage,
+                    {
+                        method: "POST",
+                        body: JSON.stringify({
+                            AccessToken: AccToken,
+                            RefreshToken: RefToken,
+                        }),
+                    }
+                );
+                return await response.json();
+            } catch (err) {
+                console.error("Error fetching metrics: " + err);
+            }
+        },
+
+        async parseMetrics() {
+            this.isBusy = true;
+            let metrics = await this.getMetrics();
+            metrics = metrics["leafdata"];
+
+            metrics.forEach((leaf) => {
+                //get total cpu percent processor time
+                let totalPerProcUsed = 0;
+                leaf["data"][0]["data"][0]["Cores"].forEach((core) => {
+                    totalPerProcUsed += core["PercentProcessorTime"];
+                });
+
+                this.realData.push({
+                    AssignedName: leaf["ComputerName"],
+                    CPUused: totalPerProcUsed + " %",
+                    Drive: leaf["data"][1]["data"][0]["Name"],
+                    DiskSize:
+                        parseFloat(
+                            leaf["data"][1]["data"][0]["Size"] -
+                                leaf["data"][1]["data"][0]["FreeSpace"]
+                        ).toFixed(3) +
+                        " GB/ " +
+                        parseFloat(leaf["data"][1]["data"][0]["Size"]).toFixed(
+                            3
+                        ) +
+                        " GB",
+                    DiskIO:
+                        leaf["data"][1]["data"][0]["DiskBytesPersec"] + "B/s",
+                    RAM:
+                        parseFloat(
+                            leaf["data"][2]["data"][0]["TotalMemory"] -
+                                leaf["data"][2]["data"][0]["AvailableMBytes"]
+                        ).toFixed(3) +
+                        " GB/ " +
+                        parseInt(leaf["data"][2]["data"][0]["TotalMemory"]) +
+                        " GB",
+                });
+            });
+            this.isBusy = false;
+        },
+    },
+
+    mounted() {
+        this.parseMetrics();
     },
 };
 // methods: {
