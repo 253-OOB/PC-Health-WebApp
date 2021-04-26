@@ -1,7 +1,7 @@
 <template>
     <div id="TheContainer">
-        <TheHeader />
-        <router-view id="main" />
+        <TheHeader @changeTags="setTagOptions($event)" />
+        <router-view id="main" v-bind:tags="this.tagOptions" />
     </div>
 </template>
 
@@ -13,11 +13,24 @@ export default {
     components: {
         TheHeader,
     },
+
+    data() {
+        return {
+            tagOptions: null,
+        };
+    },
+
+    methods: {
+        setTagOptions(tags) {
+            this.tagOptions = tags;
+        },
+    },
 };
 </script>
 
 <style scoped>
 #TheContainer {
+    color: var(--font-color);
     text-align: center;
     height: 100vh;
     width: 100vw;
