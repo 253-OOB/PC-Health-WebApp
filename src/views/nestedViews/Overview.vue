@@ -32,6 +32,8 @@ export default {
             componentName: LeafSummary,
             LeafComponent: [],
             loading: true,
+            allLeafs: [],
+            filteredLeafs: [],
         };
     },
     components: {
@@ -42,7 +44,7 @@ export default {
         //filter leaves by name or tag or both and assign it as the leafcomponet
         async getFilteredLeaves() {
             //Use Dummy Data
-            if (this.$store.state.useDummyData) {
+            if (this.$store.state.useDummyData === null) {
                 return FleafDataJ; //no filtering for dummy data
             }
 
@@ -56,49 +58,61 @@ export default {
                     throw new Error("Not loaded yet");
                 }
 
-                this.LeafComponent = await this.getLeafs(
+                //if leafs have been previously fetched before and no filter is being applied
+                this.allLeafs = await this.getLeafs(
                     this.$store.state.organizationID
                 );
+                this.filteredLeafs = this.allLeafs;
+                this.LeafComponent = this.filteredLeafs;
             } catch (e) {
-                // Triggered at initial call and org change
+                // Triggered at initial call and tag/keyword change
                 this.unsubscribe = this.$store.subscribe(
                     async (mutation, state) => {
-                        this.loading = true;
-                        if (
-                            mutation.type === "updateOrgID" ||
+                        if (mutation.type === "updateOrgID") {
+                            this.loading = true;
+                            //when org changes refetch all keys
+                            this.allLeafs = await this.getLeafs(
+                                state.organizationID
+                            );
+                            this.filteredLeafs = this.allLeafs;
+                            this.LeafComponent = this.filteredLeafs;
+                            this.loading = false;
+                        } else if (
                             mutation.type === "updateSelectedTag" ||
                             mutation.type === "updateSearchWord"
                         ) {
-                            const leafList = await this.getLeafs(
-                                state.organizationID
-                            );
-                            const nameFilter = this.keyword;
+                            this.loading = true;
+                            this.filteredLeafs = this.allLeafs; //start filteredLeafs with all leafs in it
+                            const nameFilter = state.searchWord;
                             const tagFilter = state.tagSelected;
-                            let filteredList = leafList;
 
                             //filter by name
                             if (nameFilter !== "") {
-                                filteredList = filteredList.filter((leaf) =>
-                                    leaf.AssignedName.toLowerCase().includes(
-                                        nameFilter.toLowerCase()
-                                    )
+                                this.filteredLeafs = this.filteredLeafs.filter(
+                                    (leaf) =>
+                                        leaf.AssignedName.toLowerCase().includes(
+                                            nameFilter.toLowerCase()
+                                        )
                                 );
                             }
 
                             //filter by tag
                             if (tagFilter !== null) {
-                                filteredList = filteredList.filter((leaf) => {
-                                    let flag = false;
-                                    leaf["tags"].forEach((tag) => {
-                                        if (tag["TagID"] === tagFilter) {
-                                            flag = true;
-                                        }
-                                    });
-                                    return flag;
-                                });
+                                this.filteredLeafs = this.filteredLeafs.filter(
+                                    (leaf) => {
+                                        let flag = false;
+                                        leaf["tags"].forEach((tag) => {
+                                            if (tag["TagID"] === tagFilter) {
+                                                flag = true;
+                                            }
+                                        });
+                                        return flag;
+                                    }
+                                );
                             }
 
-                            this.LeafComponent = filteredList;
+                            this.LeafComponent = this.filteredLeafs;
+                            this.filteredLeafs = this.allLeafs; //reset filteredLeafs to contain all leafs
                             this.loading = false;
                         }
                     }
@@ -133,9 +147,10 @@ export default {
         this.loading = true;
         this.getFilteredLeaves();
     },
-    beforeDestroy() {
-        this.unsubscribe();
-    },
+
+    // beforeDestroy() {
+    //     this.unsubscribe();
+    // },
 };
 </script>
 
