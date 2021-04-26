@@ -16,7 +16,7 @@
                     <p class="text">Metrics</p>
                 </router-link>
 
-                <!-- GRAPHS -->
+                <!-- GRAPHS
                 <router-link
                     to="/graphs"
                     class="navbar-item flex-aligned"
@@ -24,13 +24,13 @@
                 >
                     <font-awesome-icon icon="chart-line" class="icons" />
                     <p class="text">Graphs</p>
-                </router-link>
+                </router-link> -->
 
                 <!-- NOTIFICATIONS -->
                 <router-link
                     to="/notifications"
                     class="navbar-item flex-aligned"
-                    v-on:click.native="navSwitch(2)"
+                    v-on:click.native="navSwitch(1)"
                 >
                     <font-awesome-icon icon="bell" class="icons" />
                     <p class="text">Notifications</p>
@@ -40,7 +40,7 @@
                 <router-link
                     to="/settings"
                     class="navbar-item flex-aligned"
-                    v-on:click.native="navSwitch(3)"
+                    v-on:click.native="navSwitch(2)"
                 >
                     <font-awesome-icon icon="cog" class="icons" />
                     <p class="text">Settings</p>
