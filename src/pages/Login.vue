@@ -2,7 +2,7 @@
     <div class="wrapper">
         <div>
             <h1>Nightingale</h1>
-            <img src="@/assets/Nightingale logo.png" alt="logo" />
+            <!-- <img src="@/assets/Nightingale logo.png" alt="logo" /> -->
         </div>
 
         <div class="login-main">
