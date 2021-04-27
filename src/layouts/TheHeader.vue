@@ -4,7 +4,7 @@
         <!-- Title + NavBar -->
         <!--                -->
         <header class="header flex-aligned">
-            <h1 id="title">PC Health</h1>
+            <h1 id="title">Nightingale</h1>
             <div id="TheNavbar">
                 <!-- METRICS -->
                 <router-link

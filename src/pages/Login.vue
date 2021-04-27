@@ -1,6 +1,9 @@
 <template>
     <div class="wrapper">
-        <h1 class="title">PC Health</h1>
+        <div>
+            <h1>Nightingale</h1>
+            <img src="@/assets/Nightingale logo.png" alt="logo" />
+        </div>
 
         <div class="login-main">
             <h2 class="login-heading">Login</h2>
@@ -114,7 +117,8 @@ export default {
     height: 100vh;
     width: 100vw;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     font-family: "Barlow", sans-serif;
     color: black;
@@ -122,7 +126,7 @@ export default {
 
 .title {
     position: absolute;
-    top: 10%;
+    top: 15%;
     left: 50%;
     transform: translate(-50%, -50%);
 }

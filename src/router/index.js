@@ -29,6 +29,7 @@ export default new VueRouter({
             redirect: "/metrics/overview",
             component: TheContainer,
             meta: {
+                title: "Nightingale",
                 requiresAuth: true,
             },
             children: [
@@ -84,6 +85,9 @@ export default new VueRouter({
             path: "/login",
             name: "Login",
             component: Login,
+            meta: {
+                title: "Nightingale",
+            },
         },
     ],
 });
